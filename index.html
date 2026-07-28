@@ -1,0 +1,754 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Tell us the job, get multiple quotes from verified independent pros near you, then pick the best on price, rating and speed. Free, no obligation. Serving the Klang Valley.">
+<title>FixLah — Compare quotes from trusted local pros</title>
+</head>
+<body>
+<style>
+  /* ============ TOKENS ============ */
+  :root{
+    color-scheme: light dark;
+    --paper:#f4f2ec; --surface:#ffffff; --surface-2:#faf9f4; --sunken:#efece3;
+    --text:#241f18; --muted:#726c60; --faint:#9a9385;
+    --line:#e4ded2; --line-strong:#d6cfbf;
+    --green:#0e6f4e; --green-ink:#0b5a40; --green-tint:#e7f1ea; --on-green:#ffffff;
+    --amber:#b7761a; --amber-tint:#f6ecda; --star:#c9821f;
+    --shadow:0 1px 0 rgba(27,23,18,.03), 0 22px 48px -26px rgba(27,23,18,.30);
+    --shadow-sm:0 1px 2px rgba(27,23,18,.05), 0 8px 20px -14px rgba(27,23,18,.25);
+    --radius:16px; --radius-sm:10px;
+    --mono:ui-monospace,"Cascadia Mono","Cascadia Code","SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    --maxw:1120px;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --paper:#141210; --surface:#1e1b16; --surface-2:#1a1712; --sunken:#100e0b;
+      --text:#efeae0; --muted:#a49d8e; --faint:#6f6a5e;
+      --line:#322d25; --line-strong:#403a30;
+      --green:#43bc86; --green-ink:#6fd4a6; --green-tint:#16261d; --on-green:#08130d;
+      --amber:#e0a24a; --amber-tint:#2a2013; --star:#e0a94a;
+      --shadow:0 1px 0 rgba(0,0,0,.35), 0 24px 54px -26px rgba(0,0,0,.72);
+      --shadow-sm:0 1px 2px rgba(0,0,0,.4), 0 10px 22px -14px rgba(0,0,0,.6);
+    }
+  }
+  :root[data-theme="light"]{
+    --paper:#f4f2ec; --surface:#ffffff; --surface-2:#faf9f4; --sunken:#efece3;
+    --text:#241f18; --muted:#726c60; --faint:#9a9385;
+    --line:#e4ded2; --line-strong:#d6cfbf;
+    --green:#0e6f4e; --green-ink:#0b5a40; --green-tint:#e7f1ea; --on-green:#ffffff;
+    --amber:#b7761a; --amber-tint:#f6ecda; --star:#c9821f;
+    --shadow:0 1px 0 rgba(27,23,18,.03), 0 22px 48px -26px rgba(27,23,18,.30);
+    --shadow-sm:0 1px 2px rgba(27,23,18,.05), 0 8px 20px -14px rgba(27,23,18,.25);
+  }
+  :root[data-theme="dark"]{
+    --paper:#141210; --surface:#1e1b16; --surface-2:#1a1712; --sunken:#100e0b;
+    --text:#efeae0; --muted:#a49d8e; --faint:#6f6a5e;
+    --line:#322d25; --line-strong:#403a30;
+    --green:#43bc86; --green-ink:#6fd4a6; --green-tint:#16261d; --on-green:#08130d;
+    --amber:#e0a24a; --amber-tint:#2a2013; --star:#e0a94a;
+    --shadow:0 1px 0 rgba(0,0,0,.35), 0 24px 54px -26px rgba(0,0,0,.72);
+    --shadow-sm:0 1px 2px rgba(0,0,0,.4), 0 10px 22px -14px rgba(0,0,0,.6);
+  }
+
+  /* ============ BASE ============ */
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto} }
+  body{
+    margin:0; background:var(--paper); color:var(--text);
+    font-family:var(--sans); font-size:17px; line-height:1.62;
+    -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+  }
+  h1,h2,h3{margin:0; line-height:1.08; letter-spacing:-.02em; text-wrap:balance; font-weight:800}
+  p{margin:0}
+  a{color:inherit}
+  img{max-width:100%}
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 22px}
+  .eyebrow{
+    font-family:var(--mono); font-size:.72rem; letter-spacing:.16em; text-transform:uppercase;
+    color:var(--green-ink); font-weight:600; display:inline-flex; align-items:center; gap:.5em;
+  }
+  .eyebrow::before{content:""; width:22px; height:1px; background:var(--green); display:inline-block}
+  :focus-visible{outline:2.5px solid var(--green); outline-offset:2px; border-radius:4px}
+
+  /* ============ BUTTONS ============ */
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:.55em;
+    font-family:var(--sans); font-size:1rem; font-weight:650; line-height:1;
+    padding:.92em 1.3em; border-radius:12px; border:1px solid transparent;
+    cursor:pointer; text-decoration:none; transition:transform .12s ease, box-shadow .2s ease, background .2s ease;
+    white-space:nowrap;
+  }
+  .btn-primary{background:var(--green); color:var(--on-green); box-shadow:var(--shadow-sm)}
+  .btn-primary:hover{transform:translateY(-1px); box-shadow:0 12px 26px -12px rgba(14,111,78,.6)}
+  .btn-ghost{background:transparent; color:var(--text); border-color:var(--line-strong)}
+  .btn-ghost:hover{background:var(--surface-2); border-color:var(--muted)}
+  .btn svg{width:1.15em; height:1.15em; flex:none}
+  @media (prefers-reduced-motion: reduce){ .btn:hover{transform:none} }
+
+  .wa-ico{fill:currentColor}
+
+  /* ============ TOP STRIP ============ */
+  .strip{
+    background:var(--green); color:var(--on-green);
+    font-family:var(--mono); font-size:.74rem; letter-spacing:.04em; text-align:center;
+    padding:7px 14px;
+  }
+  .strip b{font-weight:700}
+
+  /* ============ HEADER ============ */
+  header.site{
+    position:sticky; top:0; z-index:40;
+    background:color-mix(in srgb, var(--paper) 86%, transparent);
+    backdrop-filter:saturate(1.4) blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{display:flex; align-items:center; justify-content:space-between; height:66px}
+  .brand{display:inline-flex; align-items:center; gap:.55em; font-weight:800; font-size:1.22rem; letter-spacing:-.02em; text-decoration:none}
+  .brand .mark{
+    width:30px; height:30px; border-radius:8px; background:var(--green); color:var(--on-green);
+    display:grid; place-items:center; font-family:var(--mono); font-weight:700; font-size:1rem;
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.12);
+  }
+  .nav-cta{display:flex; align-items:center; gap:.6rem}
+  .nav-links{display:none; gap:1.4rem; font-size:.95rem; color:var(--muted)}
+  .nav-links a{text-decoration:none}
+  .nav-links a:hover{color:var(--text)}
+  @media (min-width:860px){ .nav-links{display:flex} }
+
+  /* ============ HERO ============ */
+  .hero{padding:clamp(38px,6vw,74px) 0 clamp(30px,5vw,54px)}
+  .hero-grid{display:grid; grid-template-columns:1fr; gap:clamp(30px,5vw,54px); align-items:center}
+  @media (min-width:940px){ .hero-grid{grid-template-columns:1.05fr .95fr} }
+  .hero h1{font-size:clamp(2.15rem,6.2vw,3.7rem); margin:.5em 0 .38em}
+  .hero h1 em{font-style:normal; color:var(--green); position:relative; white-space:nowrap}
+  .hero .lede{font-size:clamp(1.06rem,2.3vw,1.24rem); color:var(--muted); max-width:34ch}
+  .hero-actions{display:flex; flex-wrap:wrap; gap:.8rem; margin-top:1.7rem}
+  .trust{display:flex; flex-wrap:wrap; gap:.4rem 1.3rem; margin-top:1.8rem; padding-top:1.4rem; border-top:1px dashed var(--line-strong)}
+  .trust span{display:inline-flex; align-items:center; gap:.5em; font-size:.9rem; color:var(--muted)}
+  .trust svg{width:16px; height:16px; color:var(--green); flex:none}
+
+  /* ---- docket card (hero object) ---- */
+  .docket{
+    background:var(--surface); border:1px solid var(--line); border-radius:var(--radius);
+    box-shadow:var(--shadow); overflow:hidden; position:relative;
+  }
+  .docket::before,.docket::after{content:""; position:absolute; left:0; right:0; height:9px;
+    background-image:radial-gradient(circle at 6px 0, transparent 5px, var(--surface) 5px);
+    background-size:14px 9px; background-repeat:repeat-x;}
+  .docket::before{top:-8px; transform:rotate(180deg)}
+  .docket::after{bottom:-8px}
+  .docket-head{padding:16px 18px 14px; border-bottom:1px dashed var(--line-strong); display:flex; align-items:flex-start; justify-content:space-between; gap:12px}
+  .docket-head .job{font-family:var(--mono); font-size:.76rem; letter-spacing:.04em; color:var(--muted)}
+  .docket-head .job b{color:var(--text); display:block; font-size:.98rem; letter-spacing:0; margin-top:3px; font-family:var(--sans); font-weight:700}
+  .tag{font-family:var(--mono); font-size:.62rem; letter-spacing:.1em; text-transform:uppercase; padding:4px 7px; border-radius:6px; background:var(--sunken); color:var(--muted); border:1px solid var(--line); white-space:nowrap}
+  .docket-sub{padding:9px 18px; font-family:var(--mono); font-size:.72rem; color:var(--green-ink); background:var(--green-tint); border-bottom:1px dashed var(--line-strong); display:flex; align-items:center; gap:.5em}
+  .docket-sub .dot{width:7px; height:7px; border-radius:50%; background:var(--green); box-shadow:0 0 0 3px color-mix(in srgb,var(--green) 22%, transparent)}
+  .quote-row{display:grid; grid-template-columns:1fr auto; gap:2px 12px; padding:13px 18px; border-bottom:1px dashed var(--line); align-items:center}
+  .quote-row:last-child{border-bottom:0}
+  .quote-row.best{background:color-mix(in srgb,var(--green-tint) 55%, transparent)}
+  .qp{grid-row:1 / span 2; align-self:center}
+  .qname{font-weight:700; font-size:.98rem; display:flex; align-items:center; gap:.45em}
+  .qmeta{font-family:var(--mono); font-size:.74rem; color:var(--muted); margin-top:2px; display:flex; flex-wrap:wrap; gap:.2em .8em}
+  .stars{color:var(--star); font-size:.82rem; letter-spacing:.02em}
+  .price{font-family:var(--mono); font-weight:700; font-size:1.28rem; text-align:right; font-variant-numeric:tabular-nums; letter-spacing:-.01em}
+  .price small{display:block; font-size:.6rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--green-ink); margin-top:2px}
+  .pill{font-family:var(--mono); font-size:.58rem; letter-spacing:.08em; text-transform:uppercase; padding:2px 6px; border-radius:5px; border:1px solid currentColor; opacity:.9}
+  .pill.low{color:var(--green-ink)}
+  .pill.top{color:var(--amber)}
+
+  /* ============ SECTIONS ============ */
+  section{padding:clamp(44px,7vw,82px) 0}
+  .sec-head{max-width:52ch; margin-bottom:clamp(26px,4vw,44px)}
+  .sec-head h2{font-size:clamp(1.7rem,4.4vw,2.5rem); margin:.55em 0 .35em}
+  .sec-head p{color:var(--muted); font-size:1.08rem}
+  .band{background:var(--surface); border-top:1px solid var(--line); border-bottom:1px solid var(--line)}
+
+  /* value cards */
+  .cards{display:grid; grid-template-columns:1fr; gap:16px}
+  @media (min-width:720px){ .cards{grid-template-columns:repeat(3,1fr)} }
+  .card{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:26px 24px; box-shadow:var(--shadow-sm)}
+  .band .card{background:var(--surface-2)}
+  .card .ic{width:44px; height:44px; border-radius:11px; display:grid; place-items:center; background:var(--green-tint); color:var(--green-ink); margin-bottom:16px}
+  .card .ic svg{width:23px; height:23px}
+  .card h3{font-size:1.16rem; margin-bottom:.4em}
+  .card p{color:var(--muted); font-size:.98rem}
+  .card .kbd{font-family:var(--mono); color:var(--green-ink); font-weight:600}
+
+  /* steps */
+  .steps{display:grid; grid-template-columns:1fr; gap:2px; counter-reset:step; border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; background:var(--line)}
+  @media (min-width:820px){ .steps{grid-template-columns:repeat(3,1fr)} }
+  .step{background:var(--surface); padding:30px 26px}
+  .step .n{font-family:var(--mono); font-size:.78rem; letter-spacing:.14em; color:var(--green); font-weight:700}
+  .step h3{font-size:1.2rem; margin:.7em 0 .4em}
+  .step p{color:var(--muted); font-size:.98rem}
+
+  /* services */
+  .svc-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:12px}
+  @media (min-width:640px){ .svc-grid{grid-template-columns:repeat(3,1fr)} }
+  @media (min-width:940px){ .svc-grid{grid-template-columns:repeat(5,1fr)} }
+  .svc{
+    appearance:none; text-align:left; font-family:var(--sans); cursor:pointer;
+    background:var(--surface); border:1px solid var(--line); border-radius:var(--radius-sm);
+    padding:18px 16px; display:flex; flex-direction:column; gap:11px; transition:border-color .15s ease, transform .12s ease, box-shadow .2s ease; color:inherit;
+  }
+  .svc:hover{border-color:var(--green); transform:translateY(-2px); box-shadow:var(--shadow-sm)}
+  .svc svg{width:26px; height:26px; color:var(--green); stroke-width:1.6}
+  .svc .nm{font-weight:650; font-size:.98rem; line-height:1.25}
+  .svc .hint{font-family:var(--mono); font-size:.68rem; color:var(--faint); letter-spacing:.02em}
+  @media (prefers-reduced-motion: reduce){ .svc:hover,.card:hover{transform:none} }
+
+  /* ============ FORM ============ */
+  .form-shell{display:grid; grid-template-columns:1fr; gap:clamp(28px,4vw,48px); align-items:start}
+  @media (min-width:900px){ .form-shell{grid-template-columns:.85fr 1.15fr} }
+  .form-aside h2{font-size:clamp(1.7rem,4vw,2.4rem); margin:.5em 0 .5em}
+  .form-aside p{color:var(--muted)}
+  .aside-list{list-style:none; padding:0; margin:1.6rem 0 0; display:grid; gap:.9rem}
+  .aside-list li{display:flex; gap:.7em; align-items:flex-start; font-size:.98rem}
+  .aside-list svg{width:19px; height:19px; color:var(--green); flex:none; margin-top:2px}
+
+  form.req{
+    background:var(--surface); border:1px solid var(--line); border-radius:var(--radius);
+    box-shadow:var(--shadow); padding:clamp(22px,3vw,32px);
+  }
+  .form-title{font-family:var(--mono); font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); display:flex; justify-content:space-between; align-items:center; padding-bottom:16px; margin-bottom:20px; border-bottom:1px dashed var(--line-strong)}
+  .field{margin-bottom:18px}
+  .field > label{display:block; font-weight:650; font-size:.92rem; margin-bottom:.5em}
+  .field .req-star{color:var(--amber)}
+  .control{
+    width:100%; font-family:var(--sans); font-size:1rem; color:var(--text);
+    background:var(--surface-2); border:1px solid var(--line-strong); border-radius:10px;
+    padding:.8em .9em; transition:border-color .15s ease, box-shadow .15s ease;
+  }
+  textarea.control{min-height:104px; resize:vertical; line-height:1.55}
+  .control:focus{outline:none; border-color:var(--green); box-shadow:0 0 0 3px color-mix(in srgb,var(--green) 18%, transparent)}
+  select.control{appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23726c60' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right .9em center; padding-right:2.4em}
+  .row2{display:grid; grid-template-columns:1fr; gap:0}
+  @media (min-width:560px){ .row2{grid-template-columns:1fr 1fr; gap:16px} }
+  .hintline{font-size:.82rem; color:var(--faint); margin-top:.45em}
+
+  /* photo upload */
+  .drop{
+    border:1.5px dashed var(--line-strong); border-radius:10px; background:var(--surface-2);
+    padding:16px; text-align:center; cursor:pointer; transition:border-color .15s ease, background .15s ease;
+    display:flex; flex-direction:column; align-items:center; gap:6px;
+  }
+  .drop:hover{border-color:var(--green); background:var(--green-tint)}
+  .drop svg{width:26px; height:26px; color:var(--muted)}
+  .drop .t{font-weight:600; font-size:.94rem}
+  .drop .s{font-family:var(--mono); font-size:.72rem; color:var(--faint)}
+  .thumbs{display:flex; flex-wrap:wrap; gap:8px; margin-top:12px}
+  .thumbs figure{margin:0; position:relative; width:60px; height:60px; border-radius:8px; overflow:hidden; border:1px solid var(--line-strong)}
+  .thumbs img{width:100%; height:100%; object-fit:cover; display:block}
+
+  .err{color:var(--amber); font-family:var(--mono); font-size:.76rem; margin-top:.4em; display:none}
+  .field.invalid .control{border-color:var(--amber)}
+  .field.invalid .err{display:block}
+
+  .submit-wrap{margin-top:24px}
+  .submit-wrap .btn{width:100%; font-size:1.06rem; padding:1.05em}
+  .fineprint{font-size:.82rem; color:var(--muted); text-align:center; margin-top:12px; display:flex; align-items:center; justify-content:center; gap:.5em}
+  .fineprint svg{width:15px; height:15px; color:var(--green); flex:none}
+
+  /* ============ FAQ ============ */
+  .faq{max-width:760px; margin:0 auto; border-top:1px solid var(--line)}
+  details.q{border-bottom:1px solid var(--line)}
+  details.q summary{
+    list-style:none; cursor:pointer; padding:20px 4px; display:flex; align-items:center; justify-content:space-between; gap:16px;
+    font-weight:650; font-size:1.06rem;
+  }
+  details.q summary::-webkit-details-marker{display:none}
+  details.q .plus{width:22px; height:22px; flex:none; position:relative; transition:transform .2s ease}
+  details.q .plus::before,details.q .plus::after{content:""; position:absolute; background:var(--green); border-radius:2px}
+  details.q .plus::before{top:10px; left:2px; right:2px; height:2px}
+  details.q .plus::after{left:10px; top:2px; bottom:2px; width:2px; transition:transform .2s ease}
+  details.q[open] .plus::after{transform:scaleY(0)}
+  details.q .a{padding:0 4px 22px; color:var(--muted); max-width:64ch}
+  @media (prefers-reduced-motion: reduce){ details.q .plus::after{transition:none} }
+
+  /* ============ FOOTER ============ */
+  footer.site{background:var(--surface); border-top:1px solid var(--line); padding:52px 0 40px}
+  .foot-grid{display:flex; flex-wrap:wrap; gap:28px; justify-content:space-between; align-items:flex-start}
+  .foot-brand{max-width:34ch}
+  .foot-brand p{color:var(--muted); font-size:.94rem; margin-top:12px}
+  .foot-links{display:flex; gap:44px; flex-wrap:wrap}
+  .foot-col h4{font-family:var(--mono); font-size:.7rem; letter-spacing:.14em; text-transform:uppercase; color:var(--faint); margin:0 0 12px; font-weight:600}
+  .foot-col a{display:block; text-decoration:none; color:var(--muted); font-size:.94rem; padding:4px 0}
+  .foot-col a:hover{color:var(--text)}
+  .foot-bottom{margin-top:38px; padding-top:20px; border-top:1px solid var(--line); display:flex; flex-wrap:wrap; gap:10px; justify-content:space-between; font-family:var(--mono); font-size:.74rem; color:var(--faint)}
+
+  /* ============ OVERLAY ============ */
+  .overlay{position:fixed; inset:0; z-index:100; background:color-mix(in srgb,var(--paper) 78%, transparent); backdrop-filter:blur(6px); display:none; align-items:center; justify-content:center; padding:22px}
+  .overlay.on{display:flex}
+  .modal{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow); max-width:420px; width:100%; padding:30px 28px; text-align:center; animation:pop .25s ease}
+  @keyframes pop{from{transform:translateY(10px) scale(.98); opacity:0} to{transform:none; opacity:1}}
+  @media (prefers-reduced-motion: reduce){ .modal{animation:none} }
+  .modal .ok{width:56px; height:56px; border-radius:50%; background:var(--green-tint); color:var(--green); display:grid; place-items:center; margin:0 auto 18px}
+  .modal .ok svg{width:30px; height:30px}
+  .modal h3{font-size:1.3rem; margin-bottom:.5em}
+  .modal p{color:var(--muted); font-size:.96rem; margin-bottom:.6em}
+  .modal .note{background:var(--amber-tint); color:var(--text); border-radius:10px; padding:12px 14px; font-size:.9rem; display:flex; gap:.6em; text-align:left; margin:18px 0}
+  .modal .note svg{width:20px; height:20px; color:var(--amber); flex:none; margin-top:1px}
+  .modal .actions{display:flex; flex-direction:column; gap:10px; margin-top:18px}
+  .modal a.textlink{font-size:.88rem; color:var(--muted); text-decoration:underline}
+
+  /* reveal */
+  .reveal{opacity:0; transform:translateY(14px); transition:opacity .6s ease, transform .6s ease}
+  .reveal.in{opacity:1; transform:none}
+  @media (prefers-reduced-motion: reduce){ .reveal{opacity:1; transform:none; transition:none} }
+
+  .sr-only{position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0}
+</style>
+
+<!-- ============ TOP STRIP ============ -->
+<div class="strip">Now serving the <b>Klang Valley</b> &nbsp;·&nbsp; Free quotes, no obligation &nbsp;·&nbsp; Real people on WhatsApp</div>
+
+<!-- ============ HEADER ============ -->
+<header class="site">
+  <div class="wrap nav">
+    <a class="brand" href="#top" aria-label="FixLah home">
+      <span class="mark">F</span> FixLah
+    </a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="#how">How it works</a>
+      <a href="#services">Services</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <div class="nav-cta">
+      <a class="btn btn-primary" href="#request">Get free quotes</a>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="reveal">
+        <span class="eyebrow">Home &amp; auto services · Klang Valley</span>
+        <h1>Stop overpaying to get things <em>fixed</em>.</h1>
+        <p class="lede">Tell us the job once. Get several quotes from verified independent pros nearby, then pick the best on price, rating and speed — not just the cheapest.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#request">
+            <svg class="wa-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 004.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0012.04 2zm0 18.15h-.01a8.2 8.2 0 01-4.18-1.15l-.3-.18-3.11.82.83-3.04-.2-.31a8.19 8.19 0 01-1.26-4.38c0-4.54 3.7-8.23 8.24-8.23 2.2 0 4.27.86 5.82 2.42a8.18 8.18 0 012.41 5.82c0 4.54-3.7 8.23-8.24 8.23zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.12-.14.16-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.35-.77-1.85-.2-.48-.4-.42-.56-.43-.14-.01-.31-.01-.48-.01-.17 0-.43.06-.66.31-.23.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.14-1.18-.06-.11-.22-.17-.47-.29z"/></svg>
+            Get my free quotes
+          </a>
+          <a class="btn btn-ghost" href="#how">See how it works</a>
+        </div>
+        <div class="trust">
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg> ID-verified pros</span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> Prices agreed upfront</span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l2.6 5.3 5.9.9-4.2 4.2 1 5.9L12 21.6 6.7 18.3l1-5.9L3.5 8.2l5.9-.9z"/></svg> Rated by real customers</span>
+        </div>
+      </div>
+
+      <!-- hero object: the quote docket -->
+      <div class="reveal" aria-hidden="false">
+        <div class="docket" role="img" aria-label="Example: three quotes compared for one air-conditioner repair job">
+          <div class="docket-head">
+            <div class="job">JOB #KV-2261 · AIRCOND
+              <b>“AC running but not cold”</b>
+            </div>
+            <span class="tag">Example</span>
+          </div>
+          <div class="docket-sub"><span class="dot"></span> 3 quotes received in 12 minutes</div>
+
+          <div class="quote-row best">
+            <div class="qp">
+              <div class="qname">Wei L. <span class="pill low">Best value</span></div>
+              <div class="qmeta"><span class="stars">★★★★★</span> 5.0 (61) · ~1 hr away · replies fast</div>
+            </div>
+            <div class="price">RM 85<small>lowest</small></div>
+          </div>
+
+          <div class="quote-row">
+            <div class="qp">
+              <div class="qname">Faizal A. <span class="pill top">Top rated</span></div>
+              <div class="qmeta"><span class="stars">★★★★★</span> 4.9 (128) · ~25 min away</div>
+            </div>
+            <div class="price">RM 90</div>
+          </div>
+
+          <div class="quote-row">
+            <div class="qp">
+              <div class="qname">Kumar S.</div>
+              <div class="qmeta"><span class="stars">★★★★★</span> 4.8 (94) · ~40 min away · free check-up</div>
+            </div>
+            <div class="price">RM 110</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ VALUE ============ -->
+  <section class="band" id="why">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">The arbitrage</span>
+        <h2>Same job. Same quality. Often a fair bit cheaper.</h2>
+        <p>Big listed companies carry big overheads — and you pay for them. We connect you straight to skilled independents who quote honest prices for the exact same work.</p>
+      </div>
+      <div class="cards">
+        <div class="card reveal">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="8"/><path d="M12 7v10M9.5 9.2c0-1 .9-1.7 2.4-1.7s2.4.6 2.4 1.6c0 2.4-4.8 1-4.8 3.4 0 1 .9 1.7 2.4 1.7s2.5-.7 2.5-1.7"/></svg></div>
+          <h3>Fair prices, not inflated ones</h3>
+          <p>Independents without showroom overheads. For many everyday jobs that's <span class="kbd">20–40% less</span> than a big-name company quote.</p>
+        </div>
+        <div class="card reveal">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3v18M4 7l8-3 8 3M4 7l-2 5a4 4 0 008 0L8 7M20 7l-2 5a4 4 0 008 0l-2-5" transform="translate(-2 0)"/></svg></div>
+          <h3>Compare, don’t guess</h3>
+          <p>See several quotes side by side and choose on price, rating, distance and response time — the way the docket above works.</p>
+        </div>
+        <div class="card reveal">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3l7 3v5c0 4.4-3 7.7-7 9-4-1.3-7-4.6-7-9V6z"/><path d="M9.2 12l2 2 3.6-3.8"/></svg></div>
+          <h3>Verified &amp; reviewed</h3>
+          <p>Every pro is ID-checked and rated by past customers. No anonymous strangers, no ghost listings — and we remove the ones who slip.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ HOW ============ -->
+  <section id="how">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">How it works</span>
+        <h2>From “it’s broken” to booked in three steps.</h2>
+        <p>No calling around, no waiting for one company to pick up. One request goes to several trusted pros at once.</p>
+      </div>
+      <div class="steps reveal">
+        <div class="step">
+          <div class="n">STEP 01</div>
+          <h3>Tell us the job</h3>
+          <p>Pick a service, your area and describe the problem. Snap a photo if you can. Takes about two minutes.</p>
+        </div>
+        <div class="step">
+          <div class="n">STEP 02</div>
+          <h3>We match you</h3>
+          <p>Your request goes straight to verified pros nearby who handle that exact job. They come back with real quotes.</p>
+        </div>
+        <div class="step">
+          <div class="n">STEP 03</div>
+          <h3>Compare &amp; book</h3>
+          <p>Quotes land on your WhatsApp. Compare, ask questions, and book the pro you trust — at a price agreed before work starts.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SERVICES ============ -->
+  <section class="band" id="services">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">What we cover</span>
+        <h2>Everyday home &amp; auto jobs — pick yours.</h2>
+        <p>Tap a service to start your request. Not listed? Choose “Something else” and just tell us.</p>
+      </div>
+      <div class="svc-grid reveal" id="svcGrid"><!-- injected --></div>
+    </div>
+  </section>
+
+  <!-- ============ REQUEST FORM ============ -->
+  <section id="request">
+    <div class="wrap form-shell">
+      <div class="form-aside reveal">
+        <span class="eyebrow">Get your quotes</span>
+        <h2>Tell us once. We’ll bring the quotes to you.</h2>
+        <p>Fill this in and we’ll open WhatsApp with your request ready to send. A real person picks it up and lines up your quotes.</p>
+        <ul class="aside-list">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> It’s free — you only pay the pro you choose, at the price you agree.</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> No spam and no obligation to book.</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> Most requests get first quotes back the same day.</li>
+        </ul>
+      </div>
+
+      <form class="req reveal" id="reqForm" novalidate>
+        <div class="form-title"><span>Quote request</span><span id="ticket">#KV-—</span></div>
+
+        <div class="field" id="f-service">
+          <label for="service">Service <span class="req-star">*</span></label>
+          <select class="control" id="service" name="service" required>
+            <option value="" selected disabled>Choose a service…</option>
+          </select>
+          <div class="err">Please choose the service you need.</div>
+        </div>
+
+        <div class="row2">
+          <div class="field" id="f-area">
+            <label for="area">Your area / postcode <span class="req-star">*</span></label>
+            <input class="control" id="area" name="area" type="text" placeholder="e.g. Petaling Jaya, 47800" required autocomplete="address-level2">
+            <div class="err">Let us know roughly where you are.</div>
+          </div>
+          <div class="field" id="f-name">
+            <label for="name">Your name <span class="req-star">*</span></label>
+            <input class="control" id="name" name="name" type="text" placeholder="e.g. Aisha" required autocomplete="given-name">
+            <div class="err">What should the pros call you?</div>
+          </div>
+        </div>
+
+        <div class="field" id="f-desc">
+          <label for="desc">Describe the issue <span class="req-star">*</span></label>
+          <textarea class="control" id="desc" name="desc" placeholder="e.g. Living room aircond blows air but it’s not cold. Last serviced about a year ago." required></textarea>
+          <div class="err">A sentence or two helps pros quote accurately.</div>
+        </div>
+
+        <div class="field">
+          <label for="phone">Phone <span style="color:var(--faint);font-weight:400">(optional — we mainly use WhatsApp)</span></label>
+          <input class="control" id="phone" name="phone" type="tel" placeholder="e.g. 012-345 6789" autocomplete="tel" inputmode="tel">
+        </div>
+
+        <div class="field">
+          <label>Photos <span style="color:var(--faint);font-weight:400">(optional, recommended)</span></label>
+          <label class="drop" for="photos">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M12 4v12M12 4l-4 4M12 4l4 4"/></svg>
+            <span class="t">Add photos of the problem</span>
+            <span class="s">Helps pros give you a tighter price</span>
+          </label>
+          <input id="photos" name="photos" type="file" accept="image/*" multiple class="sr-only">
+          <div class="thumbs" id="thumbs"></div>
+        </div>
+
+        <div class="submit-wrap">
+          <button type="submit" class="btn btn-primary">
+            <svg class="wa-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 004.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0012.04 2zm4.52 11.99c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.12-.14.16-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.35-.77-1.85-.2-.48-.4-.42-.56-.43-.14-.01-.31-.01-.48-.01-.17 0-.43.06-.66.31-.23.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.14-1.18-.06-.11-.22-.17-.47-.29z"/></svg>
+            Get my free quotes on WhatsApp
+          </button>
+          <p class="fineprint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/></svg> Opens WhatsApp with your request ready — you tap send.</p>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- ============ FAQ ============ -->
+  <section class="band" id="faq">
+    <div class="wrap">
+      <div class="sec-head reveal" style="margin-left:auto;margin-right:auto;text-align:center;max-width:46ch">
+        <span class="eyebrow" style="justify-content:center">Good to know</span>
+        <h2>Questions people ask first.</h2>
+      </div>
+      <div class="faq reveal">
+        <details class="q" open>
+          <summary>How much does it cost to get quotes?<span class="plus"></span></summary>
+          <div class="a">Getting quotes is completely free. You only ever pay the contractor you choose, at the price the two of you agree before any work begins. We make our money from the pros, never from surprise fees on you.</div>
+        </details>
+        <details class="q">
+          <summary>How do I know the contractors are trustworthy?<span class="plus"></span></summary>
+          <div class="a">Every pro on the network is ID-verified and rated by past customers. You see their rating, number of jobs and reviews before you book — and anyone who doesn’t keep to our standards is removed.</div>
+        </details>
+        <details class="q">
+          <summary>Do I get any warranty on the work?<span class="plus"></span></summary>
+          <div class="a">Many jobs come with a workmanship warranty from the contractor. Where one applies, we’ll show you the terms before you book so there are no surprises.</div>
+        </details>
+        <details class="q">
+          <summary>Which areas do you cover right now?<span class="plus"></span></summary>
+          <div class="a">We’re starting in the Klang Valley (KL, PJ, Subang, Shah Alam and nearby) and adding new areas as we grow. Send your request anyway — if we can’t help yet, we’ll tell you honestly.</div>
+        </details>
+        <details class="q">
+          <summary>How fast will I hear back?<span class="plus"></span></summary>
+          <div class="a">Most requests get their first quotes back the same day, often within the hour during working hours. Urgent jobs like a breakdown or a leak get prioritised.</div>
+        </details>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="site">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a class="brand" href="#top"><span class="mark">F</span> FixLah</a>
+        <p>The fastest, most transparent way to find trusted local pros in Malaysia — and a fairer deal for skilled independents.</p>
+      </div>
+      <div class="foot-links">
+        <div class="foot-col">
+          <h4>Platform</h4>
+          <a href="#how">How it works</a>
+          <a href="#services">Services</a>
+          <a href="#request">Get quotes</a>
+          <a href="#faq">FAQ</a>
+        </div>
+        <div class="foot-col">
+          <h4>For pros</h4>
+          <a href="#request">Join the network</a>
+          <a href="#request">Get more jobs</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 FixLah · Klang Valley, Malaysia</span>
+      <span>Made for people who’d rather not overpay.</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ OVERLAY ============ -->
+<div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-labelledby="ov-title">
+  <div class="modal">
+    <div class="ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6L9 17l-5-5"/></svg></div>
+    <h3 id="ov-title">Opening WhatsApp…</h3>
+    <p>Your request is ready — just tap <b>send</b> in WhatsApp and we’ll get your quotes moving.</p>
+    <div class="note">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="6" width="18" height="14" rx="2"/><circle cx="12" cy="13" r="3.2"/><path d="M8 6l1.5-2h5L16 6"/></svg>
+      <span id="photoNote"><b>Got photos?</b> Attach them right in the WhatsApp chat so pros can quote accurately.</span>
+    </div>
+    <div class="actions">
+      <a class="btn btn-primary" id="waLink" href="#" target="_blank" rel="noopener">Open WhatsApp again</a>
+      <a class="textlink" href="#" id="closeOverlay">Back to the site</a>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   FixLah — MVP config.  NON-TECHNICAL FOUNDER: edit ONLY this block.
+   ============================================================ */
+const CONFIG = {
+  brand: "FixLah",
+  // 👇 REPLACE with your WhatsApp number: country code + number, no "+", no spaces.
+  //    Malaysia example: 60123456789   (60 = Malaysia, then your number without the leading 0)
+  whatsappNumber: "60XXXXXXXXX",
+  area: "Klang Valley"
+};
+
+/* ---- services (single source for the grid + the dropdown) ---- */
+const ic = (p)=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${p}</svg>`;
+const SERVICES = [
+  { code:"AC",       name:"Air-cond servicing", hint:"Service · repair · gas", icon:ic(`<rect x="3" y="6" width="18" height="8" rx="1.5"/><line x1="3" y1="10.2" x2="21" y2="10.2"/><path d="M6 16.5v2M12 16.5v2.6M18 16.5v2"/>`) },
+  { code:"PLUMB",    name:"Plumbing",           hint:"Leaks · pipes · taps",   icon:ic(`<path d="M12 3s5.5 5.8 5.5 9.5a5.5 5.5 0 0 1-11 0C6.5 8.8 12 3 12 3z"/>`) },
+  { code:"ELEC",     name:"Electrical",         hint:"Wiring · points · lights",icon:ic(`<path d="M13 2 4 14h6l-1 8 9-12h-6z"/>`) },
+  { code:"MECH",     name:"Car mechanic",       hint:"Service · repair · check",icon:ic(`<path d="M5 15l1.4-4.3A2 2 0 0 1 8.3 9.3h7.4a2 2 0 0 1 1.9 1.4L19 15"/><rect x="3" y="15" width="18" height="4" rx="1"/><circle cx="7.5" cy="19" r="1.3"/><circle cx="16.5" cy="19" r="1.3"/>`) },
+  { code:"TOW",      name:"Towing",             hint:"Breakdown · recovery",   icon:ic(`<rect x="2.5" y="9" width="9.5" height="7" rx="1"/><path d="M12 11h4l4 3v2h-8z"/><circle cx="6" cy="18" r="1.5"/><circle cx="17" cy="18" r="1.5"/>`) },
+  { code:"CLEAN",    name:"Cleaning",           hint:"Home · move-out · deep", icon:ic(`<rect x="8" y="8.5" width="6" height="11" rx="1"/><path d="M8 8.5V6h3V4"/><path d="M14 6h3M14 8h2.5M14 10h3"/>`) },
+  { code:"APPL",     name:"Appliance repair",   hint:"Fridge · washer · oven", icon:ic(`<rect x="5" y="3" width="14" height="18" rx="2"/><circle cx="12" cy="13.5" r="3.6"/><line x1="8" y1="6" x2="8.01" y2="6"/><line x1="11" y1="6" x2="16" y2="6"/>`) },
+  { code:"MOVE",     name:"Moving",             hint:"House · office · haul",  icon:ic(`<path d="M3 8l9-4 9 4-9 4z"/><path d="M3 8v8l9 4 9-4V8"/><line x1="12" y1="12" x2="12" y2="20"/>`) },
+  { code:"LOCK",     name:"Locksmith",          hint:"Locked out · locks · keys",icon:ic(`<circle cx="8.5" cy="8.5" r="4"/><path d="M11.3 11.3 19 19M16 16l2.2-2.2M18.2 18.2l2-2"/>`) },
+  { code:"OTHER",    name:"Something else",     hint:"Tell us the job",        icon:ic(`<circle cx="12" cy="12" r="9"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/>`) }
+];
+
+/* ---- render service grid + dropdown ---- */
+const grid = document.getElementById("svcGrid");
+const select = document.getElementById("service");
+SERVICES.forEach(s=>{
+  const b = document.createElement("button");
+  b.type="button"; b.className="svc"; b.dataset.code=s.code;
+  b.innerHTML = `${s.icon}<span class="nm">${s.name}</span><span class="hint">${s.hint}</span>`;
+  b.addEventListener("click", ()=>{
+    select.value = s.code;
+    document.getElementById("f-service").classList.remove("invalid");
+    document.getElementById("request").scrollIntoView({behavior:"smooth"});
+    setTimeout(()=>document.getElementById("area").focus(), 500);
+  });
+  grid.appendChild(b);
+
+  const o = document.createElement("option");
+  o.value = s.code; o.textContent = s.name;
+  select.appendChild(o);
+});
+
+/* ---- ticket number (just a friendly touch) ---- */
+const tk = Math.floor(1000 + Math.random()*9000);
+document.getElementById("ticket").textContent = "#KV-" + tk;
+
+/* ---- photo previews ---- */
+const photoInput = document.getElementById("photos");
+const thumbs = document.getElementById("thumbs");
+let photoCount = 0;
+photoInput.addEventListener("change", ()=>{
+  thumbs.innerHTML = "";
+  photoCount = photoInput.files.length;
+  [...photoInput.files].slice(0,6).forEach(f=>{
+    const fig = document.createElement("figure");
+    const img = document.createElement("img");
+    img.src = URL.createObjectURL(f);
+    img.onload = ()=>URL.revokeObjectURL(img.src);
+    fig.appendChild(img); thumbs.appendChild(fig);
+  });
+  if(photoCount>6){
+    const more=document.createElement("figure");
+    more.style.display="grid"; more.style.placeItems="center";
+    more.style.fontFamily="var(--mono)"; more.style.fontSize=".8rem"; more.style.color="var(--muted)";
+    more.textContent="+"+(photoCount-6); thumbs.appendChild(more);
+  }
+});
+
+/* ---- validation + submit ---- */
+const form = document.getElementById("reqForm");
+const required = [
+  {id:"service", field:"f-service"},
+  {id:"area",    field:"f-area"},
+  {id:"name",    field:"f-name"},
+  {id:"desc",    field:"f-desc"}
+];
+required.forEach(r=>{
+  document.getElementById(r.id).addEventListener("input", ()=>{
+    document.getElementById(r.field).classList.remove("invalid");
+  });
+});
+
+form.addEventListener("submit", (e)=>{
+  e.preventDefault();
+  let ok = true, firstBad = null;
+  required.forEach(r=>{
+    const el = document.getElementById(r.id);
+    const bad = !el.value.trim();
+    document.getElementById(r.field).classList.toggle("invalid", bad);
+    if(bad){ ok=false; if(!firstBad) firstBad=el; }
+  });
+  if(!ok){ firstBad.focus(); firstBad.scrollIntoView({behavior:"smooth", block:"center"}); return; }
+
+  const serviceName = SERVICES.find(s=>s.code===select.value)?.name || select.value;
+  const area = document.getElementById("area").value.trim();
+  const name = document.getElementById("name").value.trim();
+  const desc = document.getElementById("desc").value.trim();
+  const phone = document.getElementById("phone").value.trim();
+
+  const lines = [
+    `*New quote request — ${CONFIG.brand}*  (${document.getElementById("ticket").textContent})`,
+    `———————————————`,
+    `🔧 Service: ${serviceName}`,
+    `📍 Area: ${area}`,
+    `📝 Issue: ${desc}`,
+    `👤 Name: ${name}`
+  ];
+  if(phone) lines.push(`📞 Phone: ${phone}`);
+  if(photoCount>0) lines.push(`📸 Photos: I have ${photoCount} to share (attaching in chat)`);
+  lines.push(``, `Please send me a few quotes to compare. Thanks!`);
+
+  const text = encodeURIComponent(lines.join("\n"));
+  const url = `https://wa.me/${CONFIG.whatsappNumber}?text=${text}`;
+
+  // update overlay
+  const pn = document.getElementById("photoNote");
+  pn.innerHTML = photoCount>0
+    ? `<b>Don’t forget your ${photoCount} photo${photoCount>1?"s":""}.</b> Attach them in the WhatsApp chat so pros can quote accurately.`
+    : `<b>Got photos?</b> Attach them right in the WhatsApp chat so pros can quote accurately.`;
+  document.getElementById("waLink").href = url;
+
+  document.getElementById("overlay").classList.add("on");
+  window.open(url, "_blank");
+});
+
+/* ---- overlay close ---- */
+document.getElementById("closeOverlay").addEventListener("click",(e)=>{
+  e.preventDefault(); document.getElementById("overlay").classList.remove("on");
+});
+document.getElementById("overlay").addEventListener("click",(e)=>{
+  if(e.target.id==="overlay") e.currentTarget.classList.remove("on");
+});
+document.addEventListener("keydown",(e)=>{
+  if(e.key==="Escape") document.getElementById("overlay").classList.remove("on");
+});
+
+/* ---- scroll reveal ---- */
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(en=>{ if(en.isIntersecting){ en.target.classList.add("in"); io.unobserve(en.target); } });
+},{threshold:.12, rootMargin:"0px 0px -40px 0px"});
+document.querySelectorAll(".reveal").forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
