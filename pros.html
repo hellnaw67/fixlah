@@ -1,0 +1,851 @@
+<!doctype html>
+<html lang="en-MY">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="List your service on FixLah. Get matched to paying customers near you — no marketing grind. For plumbers, aircond techs, cleaners, detailers, electricians and more. Klang Valley.">
+<title>List your service — FixLah for pros</title>
+
+<link rel="icon" type="image/png" href="brand/fixlah-mark.png">
+<link rel="apple-touch-icon" href="brand/fixlah-mark.png">
+<meta name="theme-color" content="#f4f2ec" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#141210" media="(prefers-color-scheme: dark)">
+
+<link rel="canonical" href="https://fixlah.netlify.app/pros.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FixLah">
+<meta property="og:locale" content="en_MY">
+<meta property="og:url" content="https://fixlah.netlify.app/pros.html">
+<meta property="og:title" content="Grow your trade with FixLah — get matched to paying jobs">
+<meta property="og:description" content="Pool of vetted independents getting real jobs near them. List your service, skip the marketing grind. Founding members list free for 90 days.">
+<meta property="og:image" content="https://fixlah.netlify.app/brand/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Grow your trade with FixLah">
+<meta name="twitter:description" content="Get matched to paying jobs near you. Founding members list free for 90 days.">
+<meta name="twitter:image" content="https://fixlah.netlify.app/brand/og-image.png">
+
+<style>
+  /* ============ TOKENS (shared with index.html) ============ */
+  :root{
+    color-scheme: light dark;
+    --paper:#f4f2ec; --surface:#ffffff; --surface-2:#faf9f4; --sunken:#efece3;
+    --text:#241f18; --muted:#726c60; --faint:#9a9385;
+    --line:#e4ded2; --line-strong:#d6cfbf;
+    --green:#0e6f4e; --green-ink:#0b5a40; --green-tint:#e7f1ea; --on-green:#ffffff;
+    --amber:#b7761a; --amber-tint:#f6ecda; --star:#c9821f;
+    --shadow:0 1px 0 rgba(27,23,18,.03), 0 22px 48px -26px rgba(27,23,18,.30);
+    --shadow-sm:0 1px 2px rgba(27,23,18,.05), 0 8px 20px -14px rgba(27,23,18,.25);
+    --radius:16px; --radius-sm:10px;
+    --mono:ui-monospace,"Cascadia Mono","Cascadia Code","SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    --maxw:1120px;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --paper:#141210; --surface:#1e1b16; --surface-2:#1a1712; --sunken:#100e0b;
+      --text:#efeae0; --muted:#a49d8e; --faint:#6f6a5e;
+      --line:#322d25; --line-strong:#403a30;
+      --green:#43bc86; --green-ink:#6fd4a6; --green-tint:#16261d; --on-green:#08130d;
+      --amber:#e0a24a; --amber-tint:#2a2013; --star:#e0a94a;
+      --shadow:0 1px 0 rgba(0,0,0,.35), 0 24px 54px -26px rgba(0,0,0,.72);
+      --shadow-sm:0 1px 2px rgba(0,0,0,.4), 0 10px 22px -14px rgba(0,0,0,.6);
+    }
+  }
+  :root[data-theme="light"]{
+    --paper:#f4f2ec; --surface:#ffffff; --surface-2:#faf9f4; --sunken:#efece3;
+    --text:#241f18; --muted:#726c60; --faint:#9a9385;
+    --line:#e4ded2; --line-strong:#d6cfbf;
+    --green:#0e6f4e; --green-ink:#0b5a40; --green-tint:#e7f1ea; --on-green:#ffffff;
+    --amber:#b7761a; --amber-tint:#f6ecda; --star:#c9821f;
+  }
+  :root[data-theme="dark"]{
+    --paper:#141210; --surface:#1e1b16; --surface-2:#1a1712; --sunken:#100e0b;
+    --text:#efeae0; --muted:#a49d8e; --faint:#6f6a5e;
+    --line:#322d25; --line-strong:#403a30;
+    --green:#43bc86; --green-ink:#6fd4a6; --green-tint:#16261d; --on-green:#08130d;
+    --amber:#e0a24a; --amber-tint:#2a2013; --star:#e0a94a;
+  }
+
+  /* ============ BASE ============ */
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto} }
+  body{margin:0; background:var(--paper); color:var(--text); font-family:var(--sans); font-size:17px; line-height:1.62; -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility}
+  h1,h2,h3{margin:0; line-height:1.08; letter-spacing:-.02em; text-wrap:balance; font-weight:800}
+  p{margin:0}
+  a{color:inherit}
+  img{max-width:100%}
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 22px}
+  .eyebrow{font-family:var(--mono); font-size:.72rem; letter-spacing:.16em; text-transform:uppercase; color:var(--green-ink); font-weight:600; display:inline-flex; align-items:center; gap:.5em}
+  .eyebrow::before{content:""; width:22px; height:1px; background:var(--green); display:inline-block}
+  :focus-visible{outline:2.5px solid var(--green); outline-offset:2px; border-radius:4px}
+  .sr-only{position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0}
+
+  /* ============ BUTTONS ============ */
+  .btn{display:inline-flex; align-items:center; justify-content:center; gap:.55em; font-family:var(--sans); font-size:1rem; font-weight:650; line-height:1; padding:.92em 1.3em; border-radius:12px; border:1px solid transparent; cursor:pointer; text-decoration:none; transition:transform .12s ease, box-shadow .2s ease, background .2s ease; white-space:nowrap}
+  .btn-primary{background:var(--green); color:var(--on-green); box-shadow:var(--shadow-sm)}
+  .btn-primary:hover{transform:translateY(-1px); box-shadow:0 12px 26px -12px rgba(14,111,78,.6)}
+  .btn-ghost{background:transparent; color:var(--text); border-color:var(--line-strong)}
+  .btn-ghost:hover{background:var(--surface-2); border-color:var(--muted)}
+  .btn svg{width:1.15em; height:1.15em; flex:none}
+  .wa-ico{fill:currentColor}
+  @media (prefers-reduced-motion: reduce){ .btn:hover{transform:none} }
+
+  /* ============ STRIP + HEADER ============ */
+  .strip{background:var(--green); color:var(--on-green); font-family:var(--mono); font-size:.74rem; letter-spacing:.04em; text-align:center; padding:7px 14px}
+  .strip b{font-weight:700}
+  header.site{position:sticky; top:0; z-index:40; background:color-mix(in srgb, var(--paper) 86%, transparent); backdrop-filter:saturate(1.4) blur(10px); border-bottom:1px solid var(--line)}
+  .nav{display:flex; align-items:center; justify-content:space-between; height:66px}
+  .brand{display:inline-flex; align-items:center; gap:.55em; font-weight:800; font-size:1.22rem; letter-spacing:-.02em; text-decoration:none}
+  .brand .mark{width:30px; height:30px; border-radius:8px; background:var(--green); color:var(--on-green); display:grid; place-items:center; font-family:var(--mono); font-weight:700; font-size:1rem; box-shadow:inset 0 0 0 1px rgba(255,255,255,.12)}
+  .nav-cta{display:flex; align-items:center; gap:.6rem}
+  .nav-links{display:none; gap:1.4rem; font-size:.95rem; color:var(--muted)}
+  .nav-links a{text-decoration:none}
+  .nav-links a:hover{color:var(--text)}
+  @media (min-width:860px){ .nav-links{display:flex} }
+
+  /* ============ HERO ============ */
+  .hero{padding:clamp(38px,6vw,74px) 0 clamp(30px,5vw,54px)}
+  .hero-grid{display:grid; grid-template-columns:1fr; gap:clamp(30px,5vw,54px); align-items:center}
+  @media (min-width:940px){ .hero-grid{grid-template-columns:1.05fr .95fr} }
+  .hero h1{font-size:clamp(2.15rem,6.2vw,3.6rem); margin:.5em 0 .38em}
+  .hero h1 em{font-style:normal; color:var(--green); white-space:nowrap}
+  .hero .lede{font-size:clamp(1.06rem,2.3vw,1.22rem); color:var(--muted); max-width:40ch}
+  .hero-actions{display:flex; flex-wrap:wrap; gap:.8rem; margin-top:1.7rem}
+  .trust{display:flex; flex-wrap:wrap; gap:.4rem 1.3rem; margin-top:1.8rem; padding-top:1.4rem; border-top:1px dashed var(--line-strong)}
+  .trust span{display:inline-flex; align-items:center; gap:.5em; font-size:.9rem; color:var(--muted)}
+  .trust svg{width:16px; height:16px; color:var(--green); flex:none}
+
+  /* pro job-feed docket (hero object) */
+  .docket{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow); overflow:hidden; position:relative}
+  .docket::before,.docket::after{content:""; position:absolute; left:0; right:0; height:9px; background-image:radial-gradient(circle at 6px 0, transparent 5px, var(--surface) 5px); background-size:14px 9px; background-repeat:repeat-x}
+  .docket::before{top:-8px; transform:rotate(180deg)}
+  .docket::after{bottom:-8px}
+  .docket-head{padding:16px 18px 14px; border-bottom:1px dashed var(--line-strong); display:flex; align-items:flex-start; justify-content:space-between; gap:12px}
+  .docket-head .job{font-family:var(--mono); font-size:.76rem; letter-spacing:.04em; color:var(--muted)}
+  .docket-head .job b{color:var(--text); display:block; font-size:.98rem; letter-spacing:0; margin-top:3px; font-family:var(--sans); font-weight:700}
+  .tag{font-family:var(--mono); font-size:.62rem; letter-spacing:.1em; text-transform:uppercase; padding:4px 7px; border-radius:6px; background:var(--sunken); color:var(--muted); border:1px solid var(--line); white-space:nowrap}
+  .docket-sub{padding:9px 18px; font-family:var(--mono); font-size:.72rem; color:var(--green-ink); background:var(--green-tint); border-bottom:1px dashed var(--line-strong); display:flex; align-items:center; gap:.5em}
+  .docket-sub .dot{width:7px; height:7px; border-radius:50%; background:var(--green); box-shadow:0 0 0 3px color-mix(in srgb,var(--green) 22%, transparent)}
+  .lead-row{display:grid; grid-template-columns:1fr auto; gap:2px 12px; padding:13px 18px; border-bottom:1px dashed var(--line); align-items:center}
+  .lead-row:last-child{border-bottom:0}
+  .lname{font-weight:700; font-size:.98rem}
+  .lmeta{font-family:var(--mono); font-size:.74rem; color:var(--muted); margin-top:2px; display:flex; flex-wrap:wrap; gap:.2em .8em}
+  .lbudget{font-family:var(--mono); font-weight:700; font-size:1.06rem; text-align:right; font-variant-numeric:tabular-nums}
+  .lbudget small{display:block; font-size:.6rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--green-ink); margin-top:2px}
+
+  /* ============ SECTIONS ============ */
+  section{padding:clamp(44px,7vw,82px) 0}
+  .sec-head{max-width:52ch; margin-bottom:clamp(26px,4vw,44px)}
+  .sec-head.center{margin-left:auto; margin-right:auto; text-align:center}
+  .sec-head.center .eyebrow{justify-content:center}
+  .sec-head h2{font-size:clamp(1.7rem,4.4vw,2.5rem); margin:.55em 0 .35em}
+  .sec-head p{color:var(--muted); font-size:1.08rem}
+  .band{background:var(--surface); border-top:1px solid var(--line); border-bottom:1px solid var(--line)}
+
+  .cards{display:grid; grid-template-columns:1fr; gap:16px}
+  @media (min-width:720px){ .cards{grid-template-columns:repeat(3,1fr)} }
+  .card{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:26px 24px; box-shadow:var(--shadow-sm)}
+  .band .card{background:var(--surface-2)}
+  .card .ic{width:44px; height:44px; border-radius:11px; display:grid; place-items:center; background:var(--green-tint); color:var(--green-ink); margin-bottom:16px}
+  .card .ic svg{width:23px; height:23px}
+  .card h3{font-size:1.16rem; margin-bottom:.4em}
+  .card p{color:var(--muted); font-size:.98rem}
+  .card .kbd{font-family:var(--mono); color:var(--green-ink); font-weight:600}
+
+  .steps{display:grid; grid-template-columns:1fr; gap:2px; border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; background:var(--line)}
+  @media (min-width:820px){ .steps{grid-template-columns:repeat(3,1fr)} }
+  .step{background:var(--surface); padding:30px 26px}
+  .step .n{font-family:var(--mono); font-size:.78rem; letter-spacing:.14em; color:var(--green); font-weight:700}
+  .step h3{font-size:1.2rem; margin:.7em 0 .4em}
+  .step p{color:var(--muted); font-size:.98rem}
+
+  /* ============ FOUNDING BANNER ============ */
+  .founding{background:var(--green); color:var(--on-green); border-radius:var(--radius); padding:clamp(20px,3vw,26px) clamp(22px,3vw,30px); display:flex; flex-wrap:wrap; align-items:center; gap:14px 24px; justify-content:space-between; box-shadow:var(--shadow)}
+  .founding .ftxt{max-width:60ch}
+  .founding .ftag{font-family:var(--mono); font-size:.66rem; letter-spacing:.14em; text-transform:uppercase; opacity:.85}
+  .founding h3{font-size:clamp(1.2rem,2.6vw,1.5rem); margin:.35em 0}
+  .founding p{font-size:.96rem; opacity:.92}
+  .founding .fcount{font-family:var(--mono); font-size:.8rem; opacity:.9; margin-top:.4em}
+
+  /* ============ PRICING ============ */
+  .toggle-wrap{display:flex; align-items:center; justify-content:center; gap:12px; margin:0 0 28px; font-family:var(--mono); font-size:.82rem}
+  .toggle-wrap .save{background:var(--green-tint); color:var(--green-ink); padding:3px 8px; border-radius:6px; font-size:.72rem; letter-spacing:.04em}
+  .switch{position:relative; width:52px; height:28px; flex:none}
+  .switch input{position:absolute; opacity:0; width:100%; height:100%; margin:0; cursor:pointer}
+  .switch .track{position:absolute; inset:0; background:var(--line-strong); border-radius:999px; transition:background .2s ease}
+  .switch .knob{position:absolute; top:3px; left:3px; width:22px; height:22px; border-radius:50%; background:var(--surface); box-shadow:var(--shadow-sm); transition:transform .2s ease}
+  .switch input:checked ~ .track{background:var(--green)}
+  .switch input:checked ~ .knob{transform:translateX(24px)}
+  .switch input:focus-visible ~ .track{outline:2.5px solid var(--green); outline-offset:2px}
+
+  .plans{display:grid; grid-template-columns:1fr; gap:18px; align-items:stretch}
+  @media (min-width:820px){ .plans{grid-template-columns:repeat(3,1fr)} }
+  .plan{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:28px 26px; display:flex; flex-direction:column; box-shadow:var(--shadow-sm); position:relative}
+  .plan.pop{border-color:var(--green); box-shadow:0 0 0 1px var(--green), var(--shadow)}
+  .plan .badge{position:absolute; top:-11px; left:26px; background:var(--green); color:var(--on-green); font-family:var(--mono); font-size:.62rem; letter-spacing:.12em; text-transform:uppercase; padding:4px 10px; border-radius:6px}
+  .plan .pname{font-family:var(--mono); font-size:.74rem; letter-spacing:.14em; text-transform:uppercase; color:var(--muted)}
+  .plan .price{font-size:2.3rem; font-weight:800; letter-spacing:-.02em; margin:.35em 0 0; font-variant-numeric:tabular-nums}
+  .plan .price .cur{font-size:1.1rem; font-weight:700; color:var(--muted); vertical-align:.35em; margin-right:2px}
+  .plan .per{font-family:var(--mono); font-size:.78rem; color:var(--muted); margin-top:2px}
+  .plan .tagline{color:var(--muted); font-size:.94rem; margin:14px 0 18px; padding-bottom:18px; border-bottom:1px dashed var(--line-strong)}
+  .plan ul{list-style:none; padding:0; margin:0 0 24px; display:grid; gap:.7rem}
+  .plan li{display:flex; gap:.6em; align-items:flex-start; font-size:.95rem}
+  .plan li svg{width:18px; height:18px; color:var(--green); flex:none; margin-top:2px}
+  .plan .btn{width:100%; margin-top:auto}
+
+  /* ============ FORM ============ */
+  .form-shell{display:grid; grid-template-columns:1fr; gap:clamp(28px,4vw,48px); align-items:start}
+  @media (min-width:900px){ .form-shell{grid-template-columns:.85fr 1.15fr} }
+  .form-aside h2{font-size:clamp(1.7rem,4vw,2.4rem); margin:.5em 0 .5em}
+  .form-aside p{color:var(--muted)}
+  .aside-list{list-style:none; padding:0; margin:1.6rem 0 0; display:grid; gap:.9rem}
+  .aside-list li{display:flex; gap:.7em; align-items:flex-start; font-size:.98rem}
+  .aside-list svg{width:19px; height:19px; color:var(--green); flex:none; margin-top:2px}
+  form.req{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow); padding:clamp(22px,3vw,32px)}
+  .form-title{font-family:var(--mono); font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); display:flex; justify-content:space-between; align-items:center; padding-bottom:16px; margin-bottom:20px; border-bottom:1px dashed var(--line-strong)}
+  .field{margin-bottom:18px}
+  .field > label{display:block; font-weight:650; font-size:.92rem; margin-bottom:.5em}
+  .field .req-star{color:var(--amber)}
+  .control{width:100%; font-family:var(--sans); font-size:1rem; color:var(--text); background:var(--surface-2); border:1px solid var(--line-strong); border-radius:10px; padding:.8em .9em; transition:border-color .15s ease, box-shadow .15s ease}
+  textarea.control{min-height:96px; resize:vertical; line-height:1.55}
+  .control:focus{outline:none; border-color:var(--green); box-shadow:0 0 0 3px color-mix(in srgb,var(--green) 18%, transparent)}
+  select.control{appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23726c60' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right .9em center; padding-right:2.4em}
+  .row2{display:grid; grid-template-columns:1fr; gap:0}
+  @media (min-width:560px){ .row2{grid-template-columns:1fr 1fr; gap:16px} }
+  .hintline{font-size:.82rem; color:var(--faint); margin-top:.45em}
+
+  /* chips (services + areas) */
+  .chips{display:flex; flex-wrap:wrap; gap:8px}
+  .chip{appearance:none; font-family:var(--sans); font-size:.9rem; cursor:pointer; background:var(--surface-2); color:var(--text); border:1px solid var(--line-strong); border-radius:999px; padding:.5em .9em; transition:border-color .12s ease, background .12s ease}
+  .chip[aria-pressed="true"]{background:var(--green-tint); border-color:var(--green); color:var(--green-ink); font-weight:600}
+  .chip:hover{border-color:var(--green)}
+
+  /* segmented (individual/business) */
+  .seg{display:inline-flex; background:var(--surface-2); border:1px solid var(--line-strong); border-radius:10px; padding:3px; gap:3px}
+  .seg button{appearance:none; font-family:var(--sans); font-size:.92rem; cursor:pointer; background:transparent; color:var(--muted); border:0; border-radius:8px; padding:.55em 1em; font-weight:600}
+  .seg button[aria-pressed="true"]{background:var(--surface); color:var(--text); box-shadow:var(--shadow-sm)}
+
+  .err{color:var(--amber); font-family:var(--mono); font-size:.76rem; margin-top:.4em; display:none}
+  .field.invalid .control, .field.invalid .chips, .field.invalid .seg{border-color:var(--amber)}
+  .field.invalid .err{display:block}
+
+  .submit-wrap{margin-top:24px}
+  .submit-wrap .btn{width:100%; font-size:1.06rem; padding:1.05em}
+  .fineprint{font-size:.82rem; color:var(--muted); text-align:center; margin-top:12px; display:flex; align-items:center; justify-content:center; gap:.5em}
+  .fineprint svg{width:15px; height:15px; color:var(--green); flex:none}
+
+  /* ============ FAQ ============ */
+  .faq{max-width:760px; margin:0 auto; border-top:1px solid var(--line)}
+  details.q{border-bottom:1px solid var(--line)}
+  details.q summary{list-style:none; cursor:pointer; padding:20px 4px; display:flex; align-items:center; justify-content:space-between; gap:16px; font-weight:650; font-size:1.06rem}
+  details.q summary::-webkit-details-marker{display:none}
+  details.q .plus{width:22px; height:22px; flex:none; position:relative; transition:transform .2s ease}
+  details.q .plus::before,details.q .plus::after{content:""; position:absolute; background:var(--green); border-radius:2px}
+  details.q .plus::before{top:10px; left:2px; right:2px; height:2px}
+  details.q .plus::after{left:10px; top:2px; bottom:2px; width:2px; transition:transform .2s ease}
+  details.q[open] .plus::after{transform:scaleY(0)}
+  details.q .a{padding:0 4px 22px; color:var(--muted); max-width:64ch}
+  @media (prefers-reduced-motion: reduce){ details.q .plus::after{transition:none} }
+
+  /* ============ FOOTER ============ */
+  footer.site{background:var(--surface); border-top:1px solid var(--line); padding:52px 0 40px}
+  .foot-grid{display:flex; flex-wrap:wrap; gap:28px; justify-content:space-between; align-items:flex-start}
+  .foot-brand{max-width:34ch}
+  .foot-brand p{color:var(--muted); font-size:.94rem; margin-top:12px}
+  .foot-links{display:flex; gap:44px; flex-wrap:wrap}
+  .foot-col h4{font-family:var(--mono); font-size:.7rem; letter-spacing:.14em; text-transform:uppercase; color:var(--faint); margin:0 0 12px; font-weight:600}
+  .foot-col a{display:block; text-decoration:none; color:var(--muted); font-size:.94rem; padding:4px 0}
+  .foot-col a:hover{color:var(--text)}
+  .foot-bottom{margin-top:38px; padding-top:20px; border-top:1px solid var(--line); display:flex; flex-wrap:wrap; gap:10px; justify-content:space-between; font-family:var(--mono); font-size:.74rem; color:var(--faint)}
+
+  /* ============ OVERLAY ============ */
+  .overlay{position:fixed; inset:0; z-index:100; background:color-mix(in srgb,var(--paper) 78%, transparent); backdrop-filter:blur(6px); display:none; align-items:center; justify-content:center; padding:22px}
+  .overlay.on{display:flex}
+  .modal{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow); max-width:440px; width:100%; padding:30px 28px; text-align:center; animation:pop .25s ease}
+  @keyframes pop{from{transform:translateY(10px) scale(.98); opacity:0} to{transform:none; opacity:1}}
+  @media (prefers-reduced-motion: reduce){ .modal{animation:none} }
+  .modal .ok{width:56px; height:56px; border-radius:50%; background:var(--green-tint); color:var(--green); display:grid; place-items:center; margin:0 auto 18px}
+  .modal .ok svg{width:30px; height:30px}
+  .modal h3{font-size:1.3rem; margin-bottom:.5em}
+  .modal p{color:var(--muted); font-size:.96rem; margin-bottom:.6em}
+  .modal .note{background:var(--green-tint); color:var(--text); border-radius:10px; padding:12px 14px; font-size:.9rem; display:flex; gap:.6em; text-align:left; margin:18px 0}
+  .modal .note svg{width:20px; height:20px; color:var(--green); flex:none; margin-top:1px}
+  .modal .actions{display:flex; flex-direction:column; gap:10px; margin-top:18px}
+  .modal a.textlink{font-size:.88rem; color:var(--muted); text-decoration:underline}
+
+  /* reveal */
+  .reveal{opacity:0; transform:translateY(14px); transition:opacity .6s ease, transform .6s ease}
+  .reveal.in{opacity:1; transform:none}
+  @media (prefers-reduced-motion: reduce){ .reveal{opacity:1; transform:none; transition:none} }
+</style>
+
+<!-- ============ TOP STRIP ============ -->
+<div class="strip">For tradespeople &amp; freelancers &nbsp;·&nbsp; <b>Founding members list free for 90 days</b> &nbsp;·&nbsp; Klang Valley</div>
+
+<!-- ============ HEADER ============ -->
+<header class="site">
+  <div class="wrap nav">
+    <a class="brand" href="index.html" aria-label="FixLah home"><span class="mark">F</span> FixLah</a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="#why">Why join</a>
+      <a href="#how">How it works</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <div class="nav-cta">
+      <a class="btn btn-ghost" href="index.html">I need a pro</a>
+      <a class="btn btn-primary" href="#apply">List your service</a>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="reveal">
+        <span class="eyebrow">FixLah for pros · Klang Valley</span>
+        <h1>Get paying jobs. Skip the <em>marketing grind</em>.</h1>
+        <p class="lede">You're good at the work — chasing customers is the hard part. Join a vetted network of independents and let matched jobs come to you. Aircond, plumbing, electrical, cleaning, car detailing, moving and more.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#apply">
+            <svg class="wa-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 004.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0012.04 2zm0 18.15h-.01a8.2 8.2 0 01-4.18-1.15l-.3-.18-3.11.82.83-3.04-.2-.31a8.19 8.19 0 01-1.26-4.38c0-4.54 3.7-8.23 8.24-8.23 2.2 0 4.27.86 5.82 2.42a8.18 8.18 0 012.41 5.82c0 4.54-3.7 8.23-8.24 8.23zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.12-.14.16-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.35-.77-1.85-.2-.48-.4-.42-.56-.43-.14-.01-.31-.01-.48-.01-.17 0-.43.06-.66.31-.23.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.14-1.18-.06-.11-.22-.17-.47-.29z"/></svg>
+            List your service
+          </a>
+          <a class="btn btn-ghost" href="#pricing">See pricing</a>
+        </div>
+        <div class="trust">
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg> Jobs matched to your area</span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> You set your own prices</span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l2.6 5.3 5.9.9-4.2 4.2 1 5.9L12 21.6 6.7 18.3l1-5.9L3.5 8.2l5.9-.9z"/></svg> Build a reviewed profile</span>
+        </div>
+      </div>
+
+      <!-- hero object: incoming job feed -->
+      <div class="reveal">
+        <div class="docket" role="img" aria-label="Example: three matched jobs waiting for a pro to quote">
+          <div class="docket-head">
+            <div class="job">YOUR JOB FEED · AIRCOND · PJ / SUBANG
+              <b>New jobs waiting for your quote</b>
+            </div>
+            <span class="tag">Example</span>
+          </div>
+          <div class="docket-sub"><span class="dot"></span> 3 matched jobs today · reply to quote</div>
+
+          <div class="lead-row">
+            <div><div class="lname">AC not cold — 1.5hp wall unit</div><div class="lmeta">📍 Petaling Jaya · 2.1 km · posted 14 min ago</div></div>
+            <div class="lbudget">RM80–120<small>customer budget</small></div>
+          </div>
+          <div class="lead-row">
+            <div><div class="lname">Aircond service ×2 units</div><div class="lmeta">📍 SS15 Subang · 3.4 km · posted 40 min ago</div></div>
+            <div class="lbudget">RM120–160<small>customer budget</small></div>
+          </div>
+          <div class="lead-row">
+            <div><div class="lname">Water leaking from indoor unit</div><div class="lmeta">📍 Kota Damansara · 5.0 km · posted 1 hr ago</div></div>
+            <div class="lbudget">RM100–180<small>customer budget</small></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ WHY JOIN ============ -->
+  <section class="band" id="why">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">Why join</span>
+        <h2>A steady stream of work, without paying for ads.</h2>
+        <p>Big directories bury you unless you pay to rank, then take a cut of every job. FixLah is built to send you real, nearby customers and let you grow a reputation you own.</p>
+      </div>
+      <div class="cards">
+        <div class="card reveal">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 17l6-6 4 4 7-7"/><path d="M14 8h6v6"/></svg></div>
+          <h3>Jobs come to you</h3>
+          <p>Customers post what they need; we match it to pros in the right area and trade. <span class="kbd">Less chasing, more doing.</span></p>
+        </div>
+        <div class="card reveal">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="8"/><path d="M12 7v10M9.5 9.2c0-1 .9-1.7 2.4-1.7s2.4.6 2.4 1.6c0 2.4-4.8 1-4.8 3.4 0 1 .9 1.7 2.4 1.7s2.5-.7 2.5-1.7"/></svg></div>
+          <h3>You keep your price</h3>
+          <p>You quote each job yourself and agree the price directly with the customer. A simple listing fee — never a surprise cut of your earnings.</p>
+        </div>
+        <div class="card reveal">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 2l2.6 5.3 5.9.9-4.2 4.2 1 5.9L12 21.6 6.7 18.3l1-5.9L3.5 8.2l5.9-.9z"/></svg></div>
+          <h3>Reputation you own</h3>
+          <p>Every good job earns a verified review and builds your profile. Rank higher, win more work — proof beats advertising.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ HOW ============ -->
+  <section id="how">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">How it works</span>
+        <h2>From sign-up to your first job in three steps.</h2>
+        <p>We keep the network small and trusted, so we vet every pro before they go live. That vetting is exactly why customers choose FixLah.</p>
+      </div>
+      <div class="steps reveal">
+        <div class="step">
+          <div class="n">STEP 01</div>
+          <h3>Apply &amp; get verified</h3>
+          <p>Tell us your trade, areas and experience, and show a little past work. We check IC and quality — usually within 48 hours.</p>
+        </div>
+        <div class="step">
+          <div class="n">STEP 02</div>
+          <h3>Set up &amp; go live</h3>
+          <p>Pick your plan, list your services and coverage areas, and your profile goes live to nearby customers.</p>
+        </div>
+        <div class="step">
+          <div class="n">STEP 03</div>
+          <h3>Get matched &amp; quote</h3>
+          <p>Matched jobs land on your WhatsApp. Quote the ones you want, do great work, collect reviews — repeat.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PRICING ============ -->
+  <section class="band" id="pricing">
+    <div class="wrap">
+      <div class="reveal" style="margin-bottom:26px">
+        <div class="founding">
+          <div class="ftxt">
+            <div class="ftag">◆ Founding member offer</div>
+            <h3>List free for 90 days — then lock in 50% off for life.</h3>
+            <p>We're building supply in the Klang Valley first. Join early, help us grow, and never pay full price. No card needed to apply.</p>
+            <div class="fcount" id="foundingCount">Open to the first 100 pros</div>
+          </div>
+          <a class="btn btn-ghost" href="#apply" style="background:var(--surface); border-color:transparent">Claim founding spot</a>
+        </div>
+      </div>
+
+      <div class="sec-head center reveal">
+        <span class="eyebrow">Pricing</span>
+        <h2>Simple monthly plans. Cancel anytime.</h2>
+        <p>One flat fee to be listed and matched — you keep everything you charge your customers.</p>
+      </div>
+
+      <div class="toggle-wrap reveal">
+        <span id="lblMonthly" style="color:var(--text)">Monthly</span>
+        <label class="switch"><input type="checkbox" id="billToggle" aria-label="Switch to annual billing"><span class="track"></span><span class="knob"></span></label>
+        <span id="lblAnnual">Annual <span class="save">2 months free</span></span>
+      </div>
+
+      <div class="plans reveal">
+        <div class="plan" data-plan="Starter">
+          <div class="pname">Starter</div>
+          <div class="price"><span class="cur">RM</span><span class="amt" data-monthly="29" data-annual="290">29</span></div>
+          <div class="per" data-per>per month</div>
+          <p class="tagline">For solo pros getting started in one trade.</p>
+          <ul>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> Verified public profile</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> Up to 3 service categories</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> Matched jobs in your areas</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> Customer reviews on your profile</li>
+          </ul>
+          <a class="btn btn-ghost" href="#apply" data-choose="Starter">Choose Starter</a>
+        </div>
+
+        <div class="plan pop" data-plan="Pro">
+          <div class="badge">Most popular</div>
+          <div class="pname">Pro</div>
+          <div class="price"><span class="cur">RM</span><span class="amt" data-monthly="69" data-annual="690">69</span></div>
+          <div class="per" data-per>per month</div>
+          <p class="tagline">For busy independents who want priority and reach.</p>
+          <ul>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> Everything in Starter</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> Unlimited service categories</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> Priority in job matching</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> "Pro" badge + portfolio gallery</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> Review showcase on your profile</li>
+          </ul>
+          <a class="btn btn-primary" href="#apply" data-choose="Pro">Choose Pro</a>
+        </div>
+
+        <div class="plan" data-plan="Business">
+          <div class="pname">Business</div>
+          <div class="price"><span class="cur">RM</span><span class="amt" data-monthly="149" data-annual="1490">149</span></div>
+          <div class="per" data-per>per month</div>
+          <p class="tagline">For teams &amp; registered businesses that want scale.</p>
+          <ul>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> Everything in Pro</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> Multiple team members</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> Top placement in your areas</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> Performance dashboard</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> Dedicated onboarding &amp; support</li>
+          </ul>
+          <a class="btn btn-ghost" href="#apply" data-choose="Business">Choose Business</a>
+        </div>
+      </div>
+      <p class="reveal" style="text-align:center; color:var(--faint); font-family:var(--mono); font-size:.76rem; margin-top:20px">Prices in MYR, excl. any applicable tax. You apply free — payment is set up only after we verify you.</p>
+    </div>
+  </section>
+
+  <!-- ============ APPLY FORM ============ -->
+  <section id="apply">
+    <div class="wrap form-shell">
+      <div class="form-aside reveal">
+        <span class="eyebrow">Join the network</span>
+        <h2>Apply to list your service.</h2>
+        <p>Fill this in and we'll open WhatsApp with your application ready to send. A real person reviews it, verifies you, and helps you go live.</p>
+        <ul class="aside-list">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> Free to apply — no card, no commitment.</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> Founding members: 90 days free, then 50% off for life.</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> You're only charged once verified and live.</li>
+        </ul>
+      </div>
+
+      <form class="req reveal" id="proForm" novalidate>
+        <div class="form-title"><span>Pro application</span><span id="ticket">#PRO-—</span></div>
+
+        <div class="field" id="f-type">
+          <label>I'm applying as <span class="req-star">*</span></label>
+          <div class="seg" role="group" aria-label="Applicant type">
+            <button type="button" id="type-ind" aria-pressed="true">An individual</button>
+            <button type="button" id="type-biz" aria-pressed="false">A business</button>
+          </div>
+          <input type="hidden" id="applicantType" value="Individual">
+        </div>
+
+        <div class="row2">
+          <div class="field" id="f-name">
+            <label for="pname">Your name / business name <span class="req-star">*</span></label>
+            <input class="control" id="pname" name="pname" type="text" placeholder="e.g. Wei Lim / CoolAir Services" required aria-invalid="false" aria-describedby="e-name">
+            <div class="err" id="e-name" role="alert">Please tell us your name.</div>
+          </div>
+          <div class="field" id="f-wa">
+            <label for="whatsapp">WhatsApp number <span class="req-star">*</span></label>
+            <input class="control" id="whatsapp" name="whatsapp" type="tel" placeholder="e.g. 012-345 6789" required autocomplete="tel" inputmode="tel" aria-invalid="false" aria-describedby="e-wa">
+            <div class="err" id="e-wa" role="alert">We line jobs up over WhatsApp — we need this.</div>
+          </div>
+        </div>
+
+        <div class="field" id="f-services">
+          <label>Services you offer <span class="req-star">*</span></label>
+          <div class="chips" id="svcChips" role="group" aria-label="Services you offer"></div>
+          <div class="hintline">Pick all that apply.</div>
+          <div class="err" id="e-services" role="alert">Choose at least one service.</div>
+        </div>
+
+        <div class="field" id="f-areas">
+          <label for="areas">Areas you cover <span class="req-star">*</span></label>
+          <input class="control" id="areas" name="areas" type="text" placeholder="e.g. PJ, Subang, Shah Alam" required aria-invalid="false" aria-describedby="e-areas">
+          <div class="chips" id="areaChips" style="margin-top:10px"></div>
+          <div class="err" id="e-areas" role="alert">Let customers know where you work.</div>
+        </div>
+
+        <div class="row2">
+          <div class="field">
+            <label for="exp">Years of experience <span style="color:var(--faint);font-weight:400">(optional)</span></label>
+            <select class="control" id="exp" name="exp">
+              <option value="" selected disabled>Choose…</option>
+              <option>Less than 1 year</option>
+              <option>1–3 years</option>
+              <option>3–5 years</option>
+              <option>5–10 years</option>
+              <option>10+ years</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="plan">Plan you're interested in <span style="color:var(--faint);font-weight:400">(optional)</span></label>
+            <select class="control" id="plan" name="plan">
+              <option value="Not sure yet" selected>Not sure yet — advise me</option>
+              <option>Starter</option>
+              <option>Pro</option>
+              <option>Business</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="bio">Tell us about your work <span style="color:var(--faint);font-weight:400">(optional)</span></label>
+          <textarea class="control" id="bio" name="bio" placeholder="What you do best, any certifications, and a link to photos of past work if you have one."></textarea>
+        </div>
+
+        <div class="submit-wrap">
+          <button type="submit" class="btn btn-primary">
+            <svg class="wa-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 004.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0012.04 2zm4.52 11.99c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.12-.14.16-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.35-.77-1.85-.2-.48-.4-.42-.56-.43-.14-.01-.31-.01-.48-.01-.17 0-.43.06-.66.31-.23.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.14-1.18-.06-.11-.22-.17-.47-.29z"/></svg>
+            Send my application on WhatsApp
+          </button>
+          <p class="fineprint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/></svg> Free to apply. We verify you before anything is charged.</p>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- ============ FAQ ============ -->
+  <section class="band" id="faq">
+    <div class="wrap">
+      <div class="sec-head center reveal" style="max-width:48ch">
+        <span class="eyebrow">Pro questions</span>
+        <h2>What tradespeople ask us.</h2>
+      </div>
+      <div class="faq reveal">
+        <details class="q" open>
+          <summary>Do you take a cut of what I charge customers?<span class="plus"></span></summary>
+          <div class="a">No. You quote each job and agree the price directly with the customer, and you keep all of it. FixLah charges a flat monthly listing fee to be on the network and get matched — that's it. (If we ever add optional paid extras like featured placement, they'll always be clearly opt-in.)</div>
+        </details>
+        <details class="q">
+          <summary>When do I actually start paying?<span class="plus"></span></summary>
+          <div class="a">Only after we verify you and your profile goes live. Applying is free. Founding members then get 90 days free before their first payment, and keep 50% off for life.</div>
+        </details>
+        <details class="q">
+          <summary>How do jobs reach me?<span class="plus"></span></summary>
+          <div class="a">When a customer near you posts a job in your trade, we send you the details on WhatsApp. You choose which jobs to quote — there's no obligation to take every one.</div>
+        </details>
+        <details class="q">
+          <summary>What do you check before I'm listed?<span class="plus"></span></summary>
+          <div class="a">We verify your identity (IC), your trade and coverage areas, and take a look at examples of your past work. Keeping the network genuinely vetted is what makes customers trust it — and what protects your reputation.</div>
+        </details>
+        <details class="q">
+          <summary>Can I cancel anytime?<span class="plus"></span></summary>
+          <div class="a">Yes. Plans are month-to-month and you can cancel whenever you like — your listing simply comes down at the end of the paid period.</div>
+        </details>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="site">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a class="brand" href="index.html"><span class="mark">F</span> FixLah</a>
+        <p>The fastest, most transparent way to find trusted local pros in Malaysia — and a fairer deal for skilled independents.</p>
+      </div>
+      <div class="foot-links">
+        <div class="foot-col">
+          <h4>For customers</h4>
+          <a href="index.html#how">How it works</a>
+          <a href="index.html#services">Services</a>
+          <a href="index.html#request">Get quotes</a>
+        </div>
+        <div class="foot-col">
+          <h4>For pros</h4>
+          <a href="#why">Why join</a>
+          <a href="#pricing">Pricing</a>
+          <a href="#apply">Apply now</a>
+          <a href="#faq">FAQ</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 FixLah · Klang Valley, Malaysia</span>
+      <span><a href="privacy.html" style="text-decoration:underline;color:inherit">Privacy</a> · Built for people who do good work.</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ OVERLAY ============ -->
+<div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-labelledby="ov-title">
+  <div class="modal">
+    <div class="ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6L9 17l-5-5"/></svg></div>
+    <h3 id="ov-title">Opening WhatsApp…</h3>
+    <p>Your application is ready — just tap <b>send</b> in WhatsApp and we'll review it.</p>
+    <div class="note">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l2.6 5.3 5.9.9-4.2 4.2 1 5.9L12 21.6 6.7 18.3l1-5.9L3.5 8.2l5.9-.9z"/></svg>
+      <span><b>Speed things up:</b> attach 2–3 photos of your past work in the chat — verified pros with photos go live fastest.</span>
+    </div>
+    <div class="actions">
+      <a class="btn btn-primary" id="waLink" href="#" target="_blank" rel="noopener">Open WhatsApp again</a>
+      <a class="textlink" href="#" id="closeOverlay">Back to the page</a>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   FixLah — Pros page config. NON-TECHNICAL FOUNDER: edit ONLY this block.
+   ============================================================ */
+const CONFIG = {
+  brand: "FixLah",
+  // 👇 Same WhatsApp number as your main site (country code + number, no "+", no spaces).
+  whatsappNumber: "60XXXXXXXXX",
+  area: "Klang Valley",
+  analyticsDomain: ""   // optional — set to your Plausible domain to track applications
+};
+
+/* ---- analytics (only loads if configured) ---- */
+if (CONFIG.analyticsDomain) {
+  const ps = document.createElement("script");
+  ps.defer = true; ps.src = "https://plausible.io/js/script.js";
+  ps.setAttribute("data-domain", CONFIG.analyticsDomain);
+  document.head.appendChild(ps);
+}
+function track(event, props){
+  try { if (window.plausible) window.plausible(event, props ? {props} : undefined); } catch(_){}
+}
+
+/* ---- services (kept in sync with the customer site) ---- */
+const SERVICES = [
+  "Air-cond servicing","Plumbing","Electrical","Car mechanic","Car detailing",
+  "Towing","Cleaning","Appliance repair","Moving","Locksmith",
+  "Painting","Renovation / handyman","Pest control","Gardening","Something else"
+];
+const AREAS = ["Petaling Jaya","Subang","Shah Alam","Kuala Lumpur","Kota Damansara","Cheras","Puchong","Klang","Ampang"];
+
+/* ---- render service chips (multi-select) ---- */
+const svcChips = document.getElementById("svcChips");
+const chosenServices = new Set();
+SERVICES.forEach(name=>{
+  const b = document.createElement("button");
+  b.type="button"; b.className="chip"; b.textContent=name; b.setAttribute("aria-pressed","false");
+  b.addEventListener("click", ()=>{
+    const on = b.getAttribute("aria-pressed")==="true";
+    b.setAttribute("aria-pressed", on ? "false" : "true");
+    if(on) chosenServices.delete(name); else chosenServices.add(name);
+    document.getElementById("f-services").classList.remove("invalid");
+  });
+  svcChips.appendChild(b);
+});
+
+/* ---- render area quick-add chips (fill the text input) ---- */
+const areaChips = document.getElementById("areaChips");
+const areaInput = document.getElementById("areas");
+AREAS.forEach(name=>{
+  const b = document.createElement("button");
+  b.type="button"; b.className="chip"; b.textContent=name; b.setAttribute("aria-pressed","false");
+  b.addEventListener("click", ()=>{
+    const parts = areaInput.value.split(",").map(s=>s.trim()).filter(Boolean);
+    const idx = parts.indexOf(name);
+    if(idx>=0){ parts.splice(idx,1); b.setAttribute("aria-pressed","false"); }
+    else { parts.push(name); b.setAttribute("aria-pressed","true"); }
+    areaInput.value = parts.join(", ");
+    document.getElementById("f-areas").classList.remove("invalid");
+  });
+  areaChips.appendChild(b);
+});
+
+/* ---- applicant type segmented control ---- */
+const typeInd = document.getElementById("type-ind");
+const typeBiz = document.getElementById("type-biz");
+const applicantType = document.getElementById("applicantType");
+function setType(kind){
+  const isBiz = kind==="Business";
+  typeBiz.setAttribute("aria-pressed", isBiz?"true":"false");
+  typeInd.setAttribute("aria-pressed", isBiz?"false":"true");
+  applicantType.value = kind;
+}
+typeInd.addEventListener("click", ()=>setType("Individual"));
+typeBiz.addEventListener("click", ()=>setType("Business"));
+
+/* ---- pricing: monthly/annual toggle ---- */
+const billToggle = document.getElementById("billToggle");
+function renderPrices(){
+  const annual = billToggle.checked;
+  document.querySelectorAll(".plan").forEach(p=>{
+    const amtEl = p.querySelector(".amt");
+    amtEl.textContent = annual ? amtEl.dataset.annual : amtEl.dataset.monthly;
+    p.querySelector("[data-per]").textContent = annual ? "per year" : "per month";
+  });
+}
+billToggle.addEventListener("change", renderPrices);
+
+/* ---- "Choose plan" buttons prefill the form's plan select ---- */
+document.querySelectorAll("[data-choose]").forEach(btn=>{
+  btn.addEventListener("click", ()=>{ document.getElementById("plan").value = btn.dataset.choose; });
+});
+
+/* ---- ticket number ---- */
+document.getElementById("ticket").textContent = "#PRO-" + Math.floor(1000 + Math.random()*9000);
+
+/* ---- validation + submit ---- */
+const form = document.getElementById("proForm");
+const required = [
+  {id:"pname",    field:"f-name"},
+  {id:"whatsapp", field:"f-wa"},
+  {id:"areas",    field:"f-areas"}
+];
+required.forEach(r=>{
+  document.getElementById(r.id).addEventListener("input", ()=>{
+    document.getElementById(r.field).classList.remove("invalid");
+    document.getElementById(r.id).setAttribute("aria-invalid","false");
+  });
+});
+
+form.addEventListener("submit",(e)=>{
+  e.preventDefault();
+  let ok = true, firstBad = null;
+  required.forEach(r=>{
+    const el = document.getElementById(r.id);
+    const bad = !el.value.trim();
+    document.getElementById(r.field).classList.toggle("invalid", bad);
+    el.setAttribute("aria-invalid", bad ? "true" : "false");
+    if(bad){ ok=false; if(!firstBad) firstBad=el; }
+  });
+  if(chosenServices.size===0){
+    document.getElementById("f-services").classList.add("invalid");
+    ok=false; if(!firstBad) firstBad=svcChips.querySelector(".chip");
+  }
+  if(!ok){ firstBad.focus(); firstBad.scrollIntoView({behavior:"smooth", block:"center"}); return; }
+
+  // Guard: the WhatsApp number must be set, or the application goes nowhere.
+  if(!/^\d{8,15}$/.test(CONFIG.whatsappNumber)){
+    track("Config error: WhatsApp number not set");
+    alert("Sorry — this page isn't quite finished yet, so we can't send your application. Please check back soon!");
+    console.error("FixLah: set CONFIG.whatsappNumber (digits only, e.g. 60123456789) in pros.html.");
+    return;
+  }
+
+  const val = id => document.getElementById(id).value.trim();
+  const lines = [
+    `*New pro application — ${CONFIG.brand}*  (${document.getElementById("ticket").textContent})`,
+    `———————————————`,
+    `👤 Applying as: ${applicantType.value}`,
+    `🏷️ Name: ${val("pname")}`,
+    `📱 WhatsApp: ${val("whatsapp")}`,
+    `🔧 Services: ${[...chosenServices].join(", ")}`,
+    `📍 Areas: ${val("areas")}`
+  ];
+  if(val("exp"))  lines.push(`🧰 Experience: ${val("exp")}`);
+  if(val("plan")) lines.push(`💳 Plan interest: ${val("plan")}`);
+  if(val("bio"))  lines.push(`📝 About: ${val("bio")}`);
+  lines.push(``, `I'd like to list my service on FixLah. Thanks!`);
+
+  const url = `https://wa.me/${CONFIG.whatsappNumber}?text=${encodeURIComponent(lines.join("\n"))}`;
+  document.getElementById("waLink").href = url;
+
+  track("Pro application", { type: applicantType.value, plan: val("plan") || "Not sure yet" });
+  openOverlay();
+  window.open(url, "_blank");
+});
+
+/* ---- overlay open/close with focus management ---- */
+const overlay = document.getElementById("overlay");
+let lastFocused = null;
+function focusables(){ return overlay.querySelectorAll('a[href], button, [tabindex]:not([tabindex="-1"])'); }
+function openOverlay(){
+  lastFocused = document.activeElement;
+  overlay.classList.add("on");
+  const f = focusables()[0]; if(f) f.focus();
+}
+function closeOverlay(){
+  overlay.classList.remove("on");
+  if(lastFocused && typeof lastFocused.focus === "function") lastFocused.focus();
+}
+document.getElementById("closeOverlay").addEventListener("click",(e)=>{ e.preventDefault(); closeOverlay(); });
+overlay.addEventListener("click",(e)=>{ if(e.target===overlay) closeOverlay(); });
+document.addEventListener("keydown",(e)=>{
+  if(!overlay.classList.contains("on")) return;
+  if(e.key==="Escape"){ closeOverlay(); return; }
+  if(e.key==="Tab"){
+    const items = focusables(); if(!items.length) return;
+    const first = items[0], last = items[items.length-1];
+    if(e.shiftKey && document.activeElement===first){ e.preventDefault(); last.focus(); }
+    else if(!e.shiftKey && document.activeElement===last){ e.preventDefault(); first.focus(); }
+  }
+});
+
+/* ---- scroll reveal ---- */
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(en=>{ if(en.isIntersecting){ en.target.classList.add("in"); io.unobserve(en.target); } });
+},{threshold:.12, rootMargin:"0px 0px -40px 0px"});
+document.querySelectorAll(".reveal").forEach(el=>io.observe(el));
+</script>
+</body>
+</html>

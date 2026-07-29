@@ -1,8 +1,11 @@
-# machine-specific launcher (paths only work on Arvind's laptop)
-Start Remote Control.bat
 # local Claude Code settings
 .claude/
 
 # private — shared personally, not via repo
 FixLah-Cofounder-Agreement.docx
 *.pdf
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+*.swp

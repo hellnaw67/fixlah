@@ -1,0 +1,22 @@
+# FixLah — Netlify deploy config.
+# The whole site is static files in the repo root, so there's no build step.
+
+[build]
+  publish = "."
+
+# Security + caching headers applied to every page.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "geolocation=(), microphone=(), camera=()"
+    # Allows the page's own inline CSS/JS and (optionally) Plausible analytics.
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://plausible.io; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self' https://plausible.io; font-src 'self'; form-action 'self'; base-uri 'self'; frame-ancestors 'none'"
+
+# Brand images rarely change — let browsers cache them for a week.
+[[headers]]
+  for = "/brand/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
