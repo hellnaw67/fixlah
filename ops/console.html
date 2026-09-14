@@ -290,6 +290,7 @@ select.ctl{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns
     openJobId: null,
     dispatchPick: {},
     booted: false,
+    seededExample: false,  // true while the board still holds untouched sample data
   };
   var db = null;
   var LS = "fixlah.ops.v1";
@@ -414,7 +415,10 @@ select.ctl{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns
   function saveLocal() {
     if (state.mode === "db") return;
     try {
-      localStorage.setItem(LS, JSON.stringify({ jobs: state.jobs, vendors: state.vendors, vehicles: state.vehicles }));
+      localStorage.setItem(LS, JSON.stringify({
+        jobs: state.jobs, vendors: state.vendors, vehicles: state.vehicles,
+        seededExample: state.seededExample,
+      }));
     } catch (e) { /* private mode / full quota — page still works in memory */ }
   }
   function loadLocal() {
@@ -437,7 +441,7 @@ select.ctl{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns
     if (state.mode === "db" && db) {
       try { await db.collection(coll).doc(obj.id).set(body(obj)); }
       catch (e) { toast(dbMsg(e)); }
-    } else saveLocal();
+    } else { state.seededExample = false; saveLocal(); }
   }
   async function drop(coll, id) {
     state[coll] = state[coll].filter(function (x) { return x.id !== id; });
@@ -445,7 +449,7 @@ select.ctl{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns
     if (state.mode === "db" && db) {
       try { await db.collection(coll).doc(id).delete(); }
       catch (e) { toast(dbMsg(e)); }
-    } else saveLocal();
+    } else { state.seededExample = false; saveLocal(); }
   }
   function dbMsg(e) {
     var c = e && e.code;
@@ -484,6 +488,7 @@ select.ctl{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns
       var local = loadLocal();
       var d = local || exampleData();
       state.jobs = d.jobs; state.vendors = d.vendors; state.vehicles = d.vehicles;
+      state.seededExample = local ? !!local.seededExample : true;
       setSync("local");
       state.booted = true;
       if (!local) saveLocal();
@@ -516,6 +521,7 @@ select.ctl{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns
       } catch (e) { toast(dbMsg(e)); }
     } else {
       state.jobs = d.jobs; state.vendors = d.vendors; state.vehicles = d.vehicles;
+      state.seededExample = true;
       saveLocal(); render(); toast("Example fleet loaded");
     }
   }
@@ -593,7 +599,19 @@ select.ctl{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns
       listHTML = '<div class="list">' + jobs.map(jobCard).join("") + "</div>";
     }
 
+    var note = "";
+    if (state.mode === "local" && state.seededExample) {
+      note = '<div class="banner">' + ICON.warn +
+        "<div><b>Sample board.</b> Every job, vendor and vehicle here is made-up example data for a Klang Valley fleet — " +
+        "not a real company's records. It all works: raise a job, send it to vendors, compare quotes. " +
+        "Changes save on this device only.</div></div>";
+    } else if (state.mode === "local") {
+      note = '<div class="banner">' + ICON.warn +
+        "<div><b>Saved on this device only.</b> Open this board signed in to your own Claude account to share it across your phone and laptop.</div></div>";
+    }
+
     $("panel").innerHTML =
+      note +
       '<div class="chips">' + chips + "</div>" +
       listHTML +
       (jobs.length ? '<div class="btnrow" style="padding-bottom:30px"><button class="btn sm" id="csvBtn">' + ICON.down + " Export job costs (CSV)</button>" +
