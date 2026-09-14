@@ -1,0 +1,1149 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FixLah Dispatch</title>
+</head>
+<body>
+<style>
+@import url("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap");
+
+/* ============ TOKENS (light is the base; both themes defined) ============ */
+:root{
+  color-scheme: light dark;
+  --paper:#f2f1ea; --surface:#ffffff; --surface-2:#f8f7f1; --sunken:#e9e7dd;
+  --text:#201c16; --muted:#6d675b; --faint:#98917f;
+  --line:#e2ddd0; --line-strong:#cfc8b6;
+  --green:#0e6f4e; --green-soft:#e4f0e9; --on-green:#ffffff;
+  --amber:#a96a12; --amber-soft:#f7ecd9;
+  --hazard:#bc3b1c; --hazard-soft:#fae6df;
+  --steel:#3b5566; --steel-soft:#e6edf1;
+  --shadow:0 1px 2px rgba(32,28,22,.05), 0 12px 28px -18px rgba(32,28,22,.4);
+  --shadow-lift:0 2px 6px rgba(32,28,22,.08), 0 28px 60px -28px rgba(32,28,22,.55);
+  --r:14px; --r-sm:9px;
+  --mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+  --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --disp:"Bricolage Grotesque","IBM Plex Sans",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#14120f; --surface:#1d1a16; --surface-2:#191713; --sunken:#100e0c;
+    --text:#efeae0; --muted:#a39c8d; --faint:#6f695d;
+    --line:#312c25; --line-strong:#443d33;
+    --green:#4cc38a; --green-soft:#16271f; --on-green:#07130d;
+    --amber:#e0a24a; --amber-soft:#2a2114;
+    --hazard:#f0714a; --hazard-soft:#2e1811;
+    --steel:#9ab6c7; --steel-soft:#1a2228;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 14px 30px -18px rgba(0,0,0,.8);
+    --shadow-lift:0 2px 8px rgba(0,0,0,.5), 0 30px 64px -28px rgba(0,0,0,.9);
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#14120f; --surface:#1d1a16; --surface-2:#191713; --sunken:#100e0c;
+  --text:#efeae0; --muted:#a39c8d; --faint:#6f695d;
+  --line:#312c25; --line-strong:#443d33;
+  --green:#4cc38a; --green-soft:#16271f; --on-green:#07130d;
+  --amber:#e0a24a; --amber-soft:#2a2114;
+  --hazard:#f0714a; --hazard-soft:#2e1811;
+  --steel:#9ab6c7; --steel-soft:#1a2228;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 14px 30px -18px rgba(0,0,0,.8);
+  --shadow-lift:0 2px 8px rgba(0,0,0,.5), 0 30px 64px -28px rgba(0,0,0,.9);
+}
+
+/* ============ BASE ============ */
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--text);font-family:var(--sans);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
+h1,h2,h3{margin:0;font-family:var(--disp);font-weight:800;letter-spacing:-.02em;line-height:1.1;text-wrap:balance}
+p{margin:0}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2.5px solid var(--green);outline-offset:2px;border-radius:4px}
+.wrap{max-width:1180px;margin:0 auto;padding-inline:16px}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+
+/* ============ HEADER ============ */
+.top{position:sticky;top:0;z-index:30;background:color-mix(in srgb,var(--paper) 92%,transparent);backdrop-filter:blur(10px) saturate(1.3);border-bottom:1px solid var(--line)}
+.topbar{display:flex;align-items:center;gap:12px;height:56px}
+.brand{display:flex;align-items:center;gap:9px;font-family:var(--disp);font-weight:800;font-size:17px;letter-spacing:-.02em;white-space:nowrap}
+.brand .mk{width:26px;height:26px;border-radius:7px;background:var(--green);color:var(--on-green);display:grid;place-items:center;flex:none}
+.brand .mk svg{width:16px;height:16px}
+.brand small{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:400}
+.spacer{flex:1}
+.sync{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);border:1px solid var(--line);border-radius:20px;padding:4px 9px;white-space:nowrap}
+.sync .dot{width:6px;height:6px;border-radius:50%;background:var(--faint)}
+.sync.on .dot{background:var(--green);box-shadow:0 0 0 3px color-mix(in srgb,var(--green) 22%,transparent)}
+.sync.local .dot{background:var(--amber)}
+.iconbtn{background:none;border:1px solid var(--line);border-radius:8px;width:34px;height:34px;display:grid;place-items:center;cursor:pointer;color:var(--muted)}
+.iconbtn:hover{color:var(--text);border-color:var(--line-strong)}
+.iconbtn svg{width:17px;height:17px}
+
+/* ============ TABS ============ */
+.tabs{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;border-top:1px solid var(--line);background:var(--surface-2)}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:none;background:none;border:0;border-bottom:2px solid transparent;padding:11px 15px;cursor:pointer;color:var(--muted);font-weight:600;font-size:14px;white-space:nowrap;display:flex;align-items:center;gap:7px}
+.tab[aria-selected="true"]{color:var(--text);border-bottom-color:var(--green);background:var(--surface)}
+.tab .cnt{font-family:var(--mono);font-size:10.5px;background:var(--sunken);color:var(--muted);border-radius:20px;padding:1px 6px;font-variant-numeric:tabular-nums}
+.tab[aria-selected="true"] .cnt{background:var(--green-soft);color:var(--green)}
+.tab .cnt.hz{background:var(--hazard-soft);color:var(--hazard)}
+
+/* ============ SUMMARY TILES ============ */
+.tiles{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;padding-block:16px}
+@media(min-width:720px){.tiles{grid-template-columns:repeat(4,1fr)}}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:13px 14px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.tile.alert{border-color:var(--hazard);background:var(--hazard-soft)}
+.tile .lab{font-family:var(--mono);font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:5px}
+.tile.alert .lab{color:var(--hazard)}
+.tile .val{font-family:var(--disp);font-size:27px;font-weight:800;letter-spacing:-.03em;font-variant-numeric:tabular-nums;line-height:1.1}
+.tile.alert .val{color:var(--hazard)}
+.tile .sub{font-size:11.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pulse{width:7px;height:7px;border-radius:50%;background:var(--hazard);animation:pulse 1.8s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
+@media(prefers-reduced-motion:reduce){.pulse{animation:none}}
+
+/* ============ FILTER CHIPS ============ */
+.chips{display:flex;gap:7px;overflow-x:auto;scrollbar-width:none;padding-bottom:12px}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:6px 12px;font-size:13px;font-weight:500;cursor:pointer;color:var(--muted);white-space:nowrap}
+.chip[aria-pressed="true"]{background:var(--text);color:var(--paper);border-color:var(--text)}
+.chip .n{font-family:var(--mono);font-size:11px;opacity:.7;margin-left:4px}
+
+/* ============ JOB CARDS ============ */
+.list{display:grid;gap:10px;padding-bottom:28px}
+.job{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:13px 14px 13px 17px;cursor:pointer;text-align:left;width:100%;display:grid;gap:7px;box-shadow:var(--shadow)}
+.job:hover{border-color:var(--line-strong)}
+.job::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;border-radius:var(--r) 0 0 var(--r);background:var(--line-strong)}
+.job.urgent::before{background:var(--hazard)}
+.job.breach{border-color:var(--hazard)}
+.job-top{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.ref{font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.02em}
+.job-title{font-weight:700;font-size:15.5px;letter-spacing:-.01em;flex:1;min-width:140px}
+.job-meta{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:12.5px;color:var(--muted)}
+.job-meta span{display:inline-flex;align-items:center;gap:5px;min-width:0}
+.job-meta svg{width:13px;height:13px;flex:none;opacity:.75}
+.plate{font-family:var(--mono);font-weight:600;font-size:12px;background:var(--sunken);border:1px solid var(--line);border-radius:4px;padding:1px 5px;letter-spacing:.04em;color:var(--text)}
+.job-foot{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.pill{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;padding:3px 7px;border-radius:5px;border:1px solid;white-space:nowrap;font-weight:600}
+.pill.neutral{color:var(--muted);border-color:var(--line-strong);background:var(--surface-2)}
+.pill.active{color:var(--steel);border-color:var(--steel);background:var(--steel-soft)}
+.pill.good{color:var(--green);border-color:var(--green);background:var(--green-soft)}
+.pill.danger{color:var(--hazard);border-color:var(--hazard);background:var(--hazard-soft)}
+.pill.warn{color:var(--amber);border-color:var(--amber);background:var(--amber-soft)}
+.sla{font-family:var(--mono);font-size:11px;display:inline-flex;align-items:center;gap:5px;font-weight:600}
+.sla.ok{color:var(--muted)} .sla.warn{color:var(--amber)} .sla.breach{color:var(--hazard)}
+.qn{font-family:var(--mono);font-size:11px;color:var(--muted)}
+
+/* ============ EMPTY / SKELETON ============ */
+.empty{background:var(--surface);border:1px dashed var(--line-strong);border-radius:var(--r);padding:34px 20px;text-align:center;display:grid;gap:8px;justify-items:center}
+.empty h3{font-size:16px}
+.empty p{color:var(--muted);font-size:13.5px;max-width:42ch}
+.skel{display:grid;gap:10px}
+.skel div{height:86px;border-radius:var(--r);background:linear-gradient(90deg,var(--surface) 25%,var(--surface-2) 50%,var(--surface) 75%);background-size:200% 100%;animation:sh 1.3s linear infinite;border:1px solid var(--line)}
+@keyframes sh{to{background-position:-200% 0}}
+@media(prefers-reduced-motion:reduce){.skel div{animation:none}}
+
+/* ============ BUTTONS ============ */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;font-weight:600;font-size:14px;padding:10px 14px;border-radius:10px;border:1px solid transparent;cursor:pointer;background:var(--surface-2);color:var(--text);border-color:var(--line-strong);text-decoration:none}
+.btn:hover{border-color:var(--muted)}
+.btn svg{width:15px;height:15px;flex:none}
+.btn.primary{background:var(--green);color:var(--on-green);border-color:transparent}
+.btn.primary:hover{filter:brightness(1.07)}
+.btn.hazard{background:var(--hazard);color:#fff;border-color:transparent}
+.btn.ghost{background:transparent}
+.btn.sm{padding:7px 11px;font-size:13px;border-radius:8px}
+.btn.block{width:100%}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btnrow{display:flex;gap:8px;flex-wrap:wrap}
+
+/* ============ FORMS ============ */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;box-shadow:var(--shadow)}
+.field{display:grid;gap:6px;margin-bottom:13px}
+.field label{font-weight:600;font-size:13px}
+.field .hint{font-size:11.5px;color:var(--faint)}
+.ctl{width:100%;background:var(--surface-2);border:1px solid var(--line-strong);border-radius:9px;padding:10px 11px;font-size:15px}
+.ctl:focus{outline:none;border-color:var(--green);box-shadow:0 0 0 3px color-mix(in srgb,var(--green) 18%,transparent)}
+textarea.ctl{min-height:76px;resize:vertical}
+select.ctl{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236d675b' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 11px center;padding-right:34px}
+.row2{display:grid;gap:0}
+@media(min-width:560px){.row2{grid-template-columns:1fr 1fr;gap:13px}}
+.toggle{display:flex;align-items:center;gap:10px;background:var(--surface-2);border:1px solid var(--line-strong);border-radius:9px;padding:11px;cursor:pointer}
+.toggle input{width:18px;height:18px;accent-color:var(--hazard);flex:none}
+.toggle .t{font-weight:600;font-size:14px}
+.toggle .s{font-size:11.5px;color:var(--muted)}
+
+/* ============ SECTION HEAD ============ */
+.shead{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding-block:4px 12px}
+.shead h2{font-size:19px;flex:1;min-width:130px}
+.shead .sub{font-size:12.5px;color:var(--muted);width:100%}
+
+/* ============ VENDOR / FLEET ROWS ============ */
+.grid2{display:grid;gap:10px}
+@media(min-width:760px){.grid2{grid-template-columns:1fr 1fr}}
+.vrow{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:13px 14px;display:grid;gap:8px;box-shadow:var(--shadow)}
+.vrow .vtop{display:flex;align-items:flex-start;gap:10px}
+.vrow .vname{font-weight:700;font-size:15px;flex:1;min-width:0}
+.tagrow{display:flex;flex-wrap:wrap;gap:5px}
+.tag{font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;background:var(--sunken);border:1px solid var(--line);color:var(--muted);border-radius:4px;padding:2px 6px}
+.tag.fleet{background:var(--green-soft);color:var(--green);border-color:color-mix(in srgb,var(--green) 35%,transparent)}
+.vstats{display:flex;gap:14px;flex-wrap:wrap;font-family:var(--mono);font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums}
+.vstats b{color:var(--text);font-weight:600}
+
+/* ============ SHEET (job detail) ============ */
+.backdrop{position:fixed;inset:0;z-index:60;background:rgba(20,18,15,.5);backdrop-filter:blur(3px);display:none}
+.backdrop.on{display:block}
+.sheet{position:fixed;z-index:61;background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow-lift);display:none;flex-direction:column;
+  left:0;right:0;bottom:0;max-height:92vh;border-radius:18px 18px 0 0}
+.sheet.on{display:flex}
+@media(min-width:720px){.sheet{left:50%;right:auto;top:50%;bottom:auto;transform:translate(-50%,-50%);width:min(660px,94vw);max-height:88vh;border-radius:var(--r)}}
+.sheet-head{padding:14px 16px;border-bottom:1px solid var(--line);display:flex;align-items:flex-start;gap:10px;flex:none}
+.sheet-head h3{font-size:18px;flex:1;min-width:0}
+.sheet-body{padding:16px;overflow-y:auto;display:grid;gap:16px}
+.grip{width:38px;height:4px;border-radius:2px;background:var(--line-strong);margin:7px auto 0}
+@media(min-width:720px){.grip{display:none}}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:13.5px}
+.kv dt{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding-top:3px}
+.kv dd{margin:0}
+.block{display:grid;gap:9px}
+.block h4{margin:0;font-size:11px;font-family:var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.divider{height:1px;background:var(--line)}
+.qrow{display:flex;align-items:center;gap:10px;padding:10px 11px;border:1px solid var(--line);border-radius:10px;background:var(--surface-2)}
+.qrow.best{border-color:var(--green);background:var(--green-soft)}
+.qrow .qi{flex:1;min-width:0}
+.qrow .qv{font-weight:600;font-size:14px}
+.qrow .qm{font-family:var(--mono);font-size:11px;color:var(--muted)}
+.qrow .qa{font-family:var(--mono);font-weight:600;font-size:16px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.vpick{display:flex;align-items:center;gap:10px;padding:9px 11px;border:1px solid var(--line);border-radius:10px;background:var(--surface-2);cursor:pointer}
+.vpick input{width:17px;height:17px;accent-color:var(--green);flex:none}
+.vpick .vn{flex:1;min-width:0;font-weight:600;font-size:14px}
+.vpick .vp{font-family:var(--mono);font-size:11px;color:var(--muted)}
+
+/* ============ TOAST ============ */
+.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%) translateY(120%);z-index:90;background:var(--text);color:var(--paper);padding:11px 16px;border-radius:10px;font-size:13.5px;font-weight:500;box-shadow:var(--shadow-lift);transition:transform .25s ease;max-width:92vw;text-align:center}
+.toast.on{transform:translateX(-50%) translateY(0)}
+@media(prefers-reduced-motion:reduce){.toast{transition:none}}
+
+.banner{background:var(--amber-soft);border:1px solid color-mix(in srgb,var(--amber) 40%,transparent);color:var(--text);border-radius:10px;padding:10px 12px;font-size:12.5px;display:flex;gap:9px;align-items:flex-start;margin-bottom:14px}
+.banner svg{width:16px;height:16px;color:var(--amber);flex:none;margin-top:1px}
+.banner b{color:var(--amber)}
+</style>
+
+<header class="top">
+  <div class="wrap topbar">
+    <div class="brand">
+      <span class="mk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 13.5l3.5 3.5L11 12"/><circle cx="16.5" cy="9" r="3.5"/><path d="M14 11.5L9.5 16"/></svg></span>
+      <span>FixLah <small>Dispatch</small></span>
+    </div>
+    <span class="spacer"></span>
+    <span class="sync" id="sync"><span class="dot"></span><span id="syncTxt">Starting</span></span>
+    <button class="iconbtn" id="themeBtn" title="Switch light / dark" aria-label="Switch light or dark theme">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 3v1.5M12 19.5V21M4.2 4.2l1.1 1.1M18.7 18.7l1.1 1.1M3 12h1.5M19.5 12H21M4.2 19.8l1.1-1.1M18.7 5.3l1.1-1.1"/><circle cx="12" cy="12" r="4"/></svg>
+    </button>
+  </div>
+  <div class="wrap" style="padding:0">
+    <div class="tabs" role="tablist">
+      <button class="tab" role="tab" id="tab-board"   aria-selected="true"  data-tab="board">Board <span class="cnt" id="cntBoard">0</span></button>
+      <button class="tab" role="tab" id="tab-new"     aria-selected="false" data-tab="new">New job</button>
+      <button class="tab" role="tab" id="tab-vendors" aria-selected="false" data-tab="vendors">Vendors <span class="cnt" id="cntVen">0</span></button>
+      <button class="tab" role="tab" id="tab-fleet"   aria-selected="false" data-tab="fleet">Fleet <span class="cnt" id="cntFleet">0</span></button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap" id="main">
+  <div class="tiles" id="tiles"></div>
+  <section id="panel"></section>
+</main>
+
+<div class="backdrop" id="backdrop"></div>
+<aside class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
+  <div class="grip"></div>
+  <div class="sheet-head">
+    <h3 id="sheetTitle">Job</h3>
+    <button class="iconbtn" id="sheetClose" aria-label="Close">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+  </div>
+  <div class="sheet-body" id="sheetBody"></div>
+</aside>
+
+<div class="toast" id="toast"></div>
+
+<script src="ops-logic.js"></script>
+<script>
+(function () {
+  "use strict";
+  var L = window.OpsLogic;
+  if (!L) {
+    document.getElementById("panel").innerHTML =
+      '<div class="empty"><h3>Dispatch logic didn\'t load</h3>' +
+      "<p>The board can't run without <span class=\"mono\">ops-logic.js</span>. Reload the page — if it keeps happening, the file didn't publish alongside this page.</p></div>";
+    document.getElementById("syncTxt").textContent = "Error";
+    return;
+  }
+
+  /* ============ STATE ============ */
+  var state = {
+    jobs: [], vendors: [], vehicles: [],
+    tab: "board", filter: "all",
+    mode: "boot",          // boot | db | local
+    openJobId: null,
+    dispatchPick: {},
+    booted: false,
+  };
+  var db = null;
+  var LS = "fixlah.ops.v1";
+
+  /* ============ HELPERS ============ */
+  function esc(s) {
+    return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+  function $(id) { return document.getElementById(id); }
+  function nowISO() { return new Date().toISOString(); }
+  function byId(list, id) { for (var i = 0; i < list.length; i++) if (list[i].id === id) return list[i]; return null; }
+
+  var toastT;
+  function toast(msg) {
+    var t = $("toast"); t.textContent = msg; t.classList.add("on");
+    clearTimeout(toastT); toastT = setTimeout(function () { t.classList.remove("on"); }, 2600);
+  }
+
+  var ICON = {
+    pin: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-5.6 7-11a7 7 0 10-14 0c0 5.4 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>',
+    truck: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1.5" y="7" width="12" height="9" rx="1"/><path d="M13.5 10h4l3 3v3h-7z"/><circle cx="6" cy="18" r="1.6"/><circle cx="17" cy="18" r="1.6"/></svg>',
+    clock: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
+    user: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-3.5 3.1-6 7-6s7 2.5 7 6"/></svg>',
+    wa: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 004.79 1.22c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0012.04 2zm4.52 11.99c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.12-.14.16-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.35-.77-1.85-.2-.48-.4-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.23.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.14-1.18-.06-.11-.22-.17-.47-.29z"/></svg>',
+    warn: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 4l9 16H3z"/><path d="M12 10v4M12 17v.01"/></svg>',
+    down: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 4v11M8 12l4 4 4-4M4 20h16"/></svg>',
+  };
+
+  /* ============ EXAMPLE FLEET (demo seed; clearly labelled in UI) ============ */
+  function exampleData() {
+    var t = Date.now(), M = 60000;
+    function ago(m) { return new Date(t - m * M).toISOString(); }
+    function day(d) { var x = new Date(t + d * 86400000); return x.toISOString().slice(0, 10); }
+
+    var vendors = [
+      { id: "v_tow1",  name: "Speedy Tunda 24H",       phone: "60122223333", services: ["TOW"],                      areas: "Klang Valley · NKVE · LDP", notes: "24/7, heavy recovery" },
+      { id: "v_tyre1", name: "Ah Seng Tayar",          phone: "60123334444", services: ["TYRE_R","TYRE_B","TYRE_S"],  areas: "Port Klang", notes: "Mobile van, fast" },
+      { id: "v_weld1", name: "Maju Weld Engineering",  phone: "60355556666", services: ["WELD","FAB","TRAILER"],      areas: "Shah Alam", notes: "Oil & gas spec certified" },
+      { id: "v_ret1",  name: "Retread Pro Sdn Bhd",    phone: "60166667777", services: ["TYRE_T","TYRE_S"],           areas: "Nilai", notes: "Casing management" },
+      { id: "v_pus1",  name: "Hakim Inspection Runner",phone: "60177778888", services: ["PUSPAKOM"],                  areas: "Padang Jawa · Bukit Raja", notes: "Handles booking + queue" },
+      { id: "v_svc1",  name: "Diesel Care Workshop",   phone: "60188889999", services: ["SVC","MECH","TRAILER"],      areas: "Klang", notes: "Hino & Scania" },
+      { id: "v_tow2",  name: "Recovery Kilat",         phone: "60199990000", services: ["TOW","TYRE_B"],              areas: "LPT2 · Karak", notes: "East coast corridor" },
+    ];
+
+    var vehicles = [
+      { id: "veh1", plate: "WA 8823 K", type: "Prime mover — Hino 700",        puspakomDue: day(6),   notes: "Fleet no. PM-04" },
+      { id: "veh2", plate: "WB 4471 T", type: "Trailer 45ft curtain sider",    puspakomDue: day(-12), notes: "Fleet no. TR-11" },
+      { id: "veh3", plate: "WC 1902 L", type: "Prime mover — Scania R460",     puspakomDue: day(126), notes: "Fleet no. PM-07" },
+      { id: "veh4", plate: "WD 7756 T", type: "Trailer 20ft skeletal",         puspakomDue: day(21),  notes: "Fleet no. TR-03" },
+      { id: "veh5", plate: "WE 3312 B", type: "Rigid lorry 10t",               puspakomDue: day(88),  notes: "Fleet no. RL-02" },
+    ];
+
+    var jobs = [
+      { id: "j1", ref: "FX-0914-N7QP", service: "TOW", urgent: true, status: "NEW",
+        plate: "WA 8823 K", vehicleType: "Prime mover — Hino 700",
+        location: "KM 312 NKVE southbound, before Bukit Lanjan",
+        desc: "Gearbox seized. 45ft curtain sider attached, loaded. Driver safe on shoulder.",
+        quotes: [], createdAt: ago(23), notes: "" },
+
+      { id: "j2", ref: "FX-0914-B2XK", service: "TYRE_B", urgent: true, status: "QUOTED",
+        plate: "WE 3312 B", vehicleType: "Rigid lorry 10t",
+        location: "LPT2 KM 88 southbound",
+        desc: "Front-left burst. Spare is bald, needs replacement not patch.",
+        quotes: [
+          { id: "q1", vendorId: "v_tyre1", vendorName: "Ah Seng Tayar", amount: 620, etaMinutes: 55, note: "New 11R22.5" },
+          { id: "q2", vendorId: "v_tow2",  vendorName: "Recovery Kilat", amount: 780, etaMinutes: 30, note: "Closer to site" }
+        ],
+        createdAt: ago(41), dispatchedAt: ago(34), notes: "" },
+
+      { id: "j3", ref: "FX-0913-R4MM", service: "FAB", urgent: false, status: "QUOTED",
+        variant: { bodyType: "Curtain sider", length: "45ft" },
+        plate: "", vehicleType: "",
+        location: "Shah Alam yard",
+        desc: "New body build for incoming chassis. Oil & gas client spec, needs cert.",
+        quotes: [
+          { id: "q3", vendorId: "v_weld1", vendorName: "Maju Weld Engineering", amount: 48500, etaMinutes: null, note: "6 weeks, cert included" },
+          { id: "q4", vendorId: "v_svc1",  vendorName: "Diesel Care Workshop",  amount: 57000, etaMinutes: null, note: "8 weeks" }
+        ],
+        createdAt: ago(1580), dispatchedAt: ago(1500), notes: "Compare against RM62k main-dealer quote." },
+
+      { id: "j4", ref: "FX-0913-K9TD", service: "PUSPAKOM", urgent: false, status: "BOOKED",
+        plate: "WB 4471 T", vehicleType: "Trailer 45ft curtain sider",
+        location: "Puspakom Padang Jawa",
+        desc: "Overdue periodic inspection. Trailer off-road until cleared.",
+        quotes: [{ id: "q5", vendorId: "v_pus1", vendorName: "Hakim Inspection Runner", amount: 320, etaMinutes: null, note: "Incl. queue handling" }],
+        vendorId: "v_pus1", vendorName: "Hakim Inspection Runner",
+        createdAt: ago(2100), dispatchedAt: ago(2040), bookedAt: ago(1900), notes: "" },
+
+      { id: "j5", ref: "FX-0912-C3WV", service: "TRAILER", urgent: false, status: "COMPLETED",
+        plate: "WD 7756 T", vehicleType: "Trailer 20ft skeletal",
+        location: "Maju Weld, Shah Alam",
+        desc: "Landing leg bent, twist lock replacement x2.",
+        quotes: [{ id: "q6", vendorId: "v_weld1", vendorName: "Maju Weld Engineering", amount: 1450, etaMinutes: null, note: "" }],
+        vendorId: "v_weld1", vendorName: "Maju Weld Engineering",
+        createdAt: ago(3400), dispatchedAt: ago(3300), bookedAt: ago(3100), completedAt: ago(220), notes: "" },
+
+      { id: "j6", ref: "FX-0908-H8LN", service: "SVC", urgent: false, status: "CLOSED",
+        variant: { size: "Large" },
+        plate: "WC 1902 L", vehicleType: "Prime mover — Scania R460",
+        location: "Diesel Care, Klang",
+        desc: "150,000km major service. Oil, filters, brake check.",
+        quotes: [{ id: "q7", vendorId: "v_svc1", vendorName: "Diesel Care Workshop", amount: 2180, etaMinutes: null, note: "" }],
+        vendorId: "v_svc1", vendorName: "Diesel Care Workshop",
+        finalCost: 2180, rating: 5,
+        createdAt: ago(9000), dispatchedAt: ago(8900), bookedAt: ago(8800), completedAt: ago(7000), notes: "" },
+
+      { id: "j7", ref: "FX-0906-P5RS", service: "TYRE_T", urgent: false, status: "CLOSED",
+        plate: "WB 4471 T", vehicleType: "Trailer 45ft curtain sider",
+        location: "Retread Pro, Nilai",
+        desc: "6 casings sent for retread.",
+        quotes: [{ id: "q8", vendorId: "v_ret1", vendorName: "Retread Pro Sdn Bhd", amount: 1620, etaMinutes: null, note: "RM270/casing" }],
+        vendorId: "v_ret1", vendorName: "Retread Pro Sdn Bhd",
+        finalCost: 1620, rating: 4,
+        createdAt: ago(12000), dispatchedAt: ago(11900), bookedAt: ago(11800), completedAt: ago(9000), notes: "" },
+    ];
+    return { jobs: jobs, vendors: vendors, vehicles: vehicles };
+  }
+
+  /* ============ PERSISTENCE ============ */
+  function saveLocal() {
+    if (state.mode === "db") return;
+    try {
+      localStorage.setItem(LS, JSON.stringify({ jobs: state.jobs, vendors: state.vendors, vehicles: state.vehicles }));
+    } catch (e) { /* private mode / full quota — page still works in memory */ }
+  }
+  function loadLocal() {
+    try {
+      var raw = localStorage.getItem(LS);
+      if (!raw) return null;
+      var d = JSON.parse(raw);
+      if (!d || !Array.isArray(d.jobs)) return null;
+      return d;
+    } catch (e) { return null; }
+  }
+
+  function body(o) { var c = Object.assign({}, o); delete c.id; return c; }
+
+  async function put(coll, obj) {
+    var list = state[coll];
+    var i = list.findIndex(function (x) { return x.id === obj.id; });
+    if (i >= 0) list[i] = obj; else list.push(obj);
+    render();
+    if (state.mode === "db" && db) {
+      try { await db.collection(coll).doc(obj.id).set(body(obj)); }
+      catch (e) { toast(dbMsg(e)); }
+    } else saveLocal();
+  }
+  async function drop(coll, id) {
+    state[coll] = state[coll].filter(function (x) { return x.id !== id; });
+    render();
+    if (state.mode === "db" && db) {
+      try { await db.collection(coll).doc(id).delete(); }
+      catch (e) { toast(dbMsg(e)); }
+    } else saveLocal();
+  }
+  function dbMsg(e) {
+    var c = e && e.code;
+    if (c === "quota_exceeded") return "Storage is full — close out old jobs to free space.";
+    if (c === "resource_exhausted") return "Too many changes at once. Wait a moment and retry.";
+    if (c === "revoked") return "Your access to this board changed. Reload the page.";
+    if (c === "invalid_argument") return "That change was rejected. Check the values and retry.";
+    return "Couldn't save just now — your change is on screen but not synced.";
+  }
+
+  /* ============ BOOT ============ */
+  function setSync(mode) {
+    state.mode = mode;
+    var el = $("sync"), tx = $("syncTxt");
+    el.className = "sync" + (mode === "db" ? " on" : mode === "local" ? " local" : "");
+    tx.textContent = mode === "db" ? "Synced" : mode === "local" ? "This device" : "Starting";
+    el.title = mode === "db"
+      ? "Saved to your shared ops board — every device signed in to your account sees the same jobs."
+      : mode === "local"
+      ? "Saved on this device only. Open on your account for a board shared across devices."
+      : "Connecting…";
+  }
+
+  async function boot() {
+    render();
+    var cap = null;
+    try { cap = window.claude && window.claude.use ? await window.claude.use("db") : null; } catch (e) { cap = null; }
+
+    if (cap) {
+      db = cap;
+      setSync("db");
+      subscribe("jobs"); subscribe("vendors"); subscribe("vehicles");
+      state.booted = true;
+      render();
+    } else {
+      var local = loadLocal();
+      var d = local || exampleData();
+      state.jobs = d.jobs; state.vendors = d.vendors; state.vehicles = d.vehicles;
+      setSync("local");
+      state.booted = true;
+      if (!local) saveLocal();
+      render();
+    }
+  }
+
+  function subscribe(coll) {
+    try {
+      db.collection(coll).onSnapshot(function (snap) {
+        state[coll] = snap.docs.map(function (d) { return Object.assign({ id: d.id }, d.data()); });
+        state.booted = true;
+        render();
+      }, function (err) {
+        toast(dbMsg(err));
+      });
+    } catch (e) { /* malformed path can't happen with fixed names */ }
+  }
+
+  async function seedExamples() {
+    var d = exampleData();
+    if (state.mode === "db" && db) {
+      try {
+        var all = [];
+        d.jobs.forEach(function (j) { all.push(db.collection("jobs").doc(j.id).set(body(j))); });
+        d.vendors.forEach(function (v) { all.push(db.collection("vendors").doc(v.id).set(body(v))); });
+        d.vehicles.forEach(function (v) { all.push(db.collection("vehicles").doc(v.id).set(body(v))); });
+        await Promise.all(all);
+        toast("Example fleet loaded");
+      } catch (e) { toast(dbMsg(e)); }
+    } else {
+      state.jobs = d.jobs; state.vendors = d.vendors; state.vehicles = d.vehicles;
+      saveLocal(); render(); toast("Example fleet loaded");
+    }
+  }
+
+  /* ============ RENDER: TILES ============ */
+  function renderTiles() {
+    var s = L.summarize(state.jobs, state.vehicles, nowISO());
+    var breaches = state.jobs.filter(function (j) {
+      var st = L.slaState(j, Date.now()); return st && st.level === "breach";
+    }).length;
+
+    var t = [];
+    t.push('<div class="tile' + (s.urgentActive ? " alert" : "") + '">' +
+      '<span class="lab">' + (s.urgentActive ? '<span class="pulse"></span>' : "") + 'Breakdowns live</span>' +
+      '<span class="val">' + s.urgentActive + "</span>" +
+      '<span class="sub">' + (breaches ? breaches + " past response time" : s.urgentActive ? "All within response time" : "Nothing on the roadside") + "</span></div>");
+
+    t.push('<div class="tile"><span class="lab">Open jobs</span><span class="val">' + s.open + "</span>" +
+      '<span class="sub">' + s.active + " running · " + s.awaitingClose + " to close</span></div>");
+
+    var pus = s.puspakomDue;
+    t.push('<div class="tile' + (pus ? "" : "") + '"><span class="lab">Puspakom due</span><span class="val">' + pus + "</span>" +
+      '<span class="sub">' + (pus ? "Within 30 days or overdue" : "All vehicles current") + "</span></div>");
+
+    t.push('<div class="tile"><span class="lab">Spend this month</span><span class="val" style="font-size:22px">' + esc(L.fmtRM(s.monthSpend)) + "</span>" +
+      '<span class="sub">' + s.monthDone + " jobs completed</span></div>");
+
+    $("tiles").innerHTML = t.join("");
+
+    $("cntBoard").textContent = s.open;
+    $("cntBoard").className = "cnt" + (s.urgentActive ? " hz" : "");
+    $("cntVen").textContent = state.vendors.length;
+    $("cntFleet").textContent = state.vehicles.length;
+  }
+
+  /* ============ RENDER: BOARD ============ */
+  var FILTERS = [
+    { k: "all",      label: "All open",        test: function (j) { return !L.isTerminal(j.status); } },
+    { k: "urgent",   label: "Breakdowns",      test: function (j) { return j.urgent && L.isActive(j.status); } },
+    { k: "quotes",   label: "Awaiting quotes", test: function (j) { return j.status === "DISPATCHED" || j.status === "NEW"; } },
+    { k: "decide",   label: "Ready to book",   test: function (j) { return j.status === "QUOTED"; } },
+    { k: "close",    label: "To close out",    test: function (j) { return j.status === "COMPLETED"; } },
+    { k: "done",     label: "Finished",        test: function (j) { return L.isTerminal(j.status); } },
+  ];
+
+  function jobSortKey(j) {
+    var sla = L.slaState(j, Date.now());
+    var sev = sla ? ({ breach: 0, warn: 1, ok: 2 })[sla.level] : 3;
+    if (!j.urgent) sev = 4;
+    return [sev, -(new Date(j.createdAt || 0).getTime())];
+  }
+
+  function renderBoard() {
+    var chips = FILTERS.map(function (f) {
+      var n = state.jobs.filter(f.test).length;
+      return '<button class="chip" data-filter="' + f.k + '" aria-pressed="' + (state.filter === f.k) + '">' +
+        esc(f.label) + '<span class="n">' + n + "</span></button>";
+    }).join("");
+
+    var f = FILTERS.find(function (x) { return x.k === state.filter; }) || FILTERS[0];
+    var jobs = state.jobs.filter(f.test).sort(function (a, b) {
+      var ka = jobSortKey(a), kb = jobSortKey(b);
+      return ka[0] - kb[0] || ka[1] - kb[1];
+    });
+
+    var listHTML;
+    if (!state.booted) {
+      listHTML = '<div class="skel"><div></div><div></div><div></div></div>';
+    } else if (!jobs.length) {
+      listHTML = '<div class="empty"><h3>Nothing here</h3><p>' +
+        (state.jobs.length ? "No jobs match this filter." :
+          "Your board is empty. Raise a job from the New job tab, or load an example fleet to see how a full day looks.") +
+        "</p>" + (state.jobs.length ? "" : '<button class="btn primary" id="seedBtn">Load example fleet</button>') + "</div>";
+    } else {
+      listHTML = '<div class="list">' + jobs.map(jobCard).join("") + "</div>";
+    }
+
+    $("panel").innerHTML =
+      '<div class="chips">' + chips + "</div>" +
+      listHTML +
+      (jobs.length ? '<div class="btnrow" style="padding-bottom:30px"><button class="btn sm" id="csvBtn">' + ICON.down + " Export job costs (CSV)</button>" +
+        '<button class="btn sm ghost" id="seedBtn2">Reload example fleet</button></div>' : "");
+
+    Array.prototype.forEach.call(document.querySelectorAll("[data-filter]"), function (b) {
+      b.onclick = function () { state.filter = b.dataset.filter; render(); };
+    });
+    Array.prototype.forEach.call(document.querySelectorAll("[data-job]"), function (b) {
+      b.onclick = function () { openJob(b.dataset.job); };
+    });
+    if ($("seedBtn")) $("seedBtn").onclick = seedExamples;
+    if ($("seedBtn2")) $("seedBtn2").onclick = seedExamples;
+    if ($("csvBtn")) $("csvBtn").onclick = exportCSV;
+  }
+
+  function jobCard(j) {
+    var sla = L.slaState(j, Date.now());
+    var meta = L.STATUS_META[j.status] || { label: j.status, tone: "neutral" };
+    var bits = [];
+    if (j.plate) bits.push("<span>" + ICON.truck + '<span class="plate">' + esc(j.plate) + "</span></span>");
+    if (j.location) bits.push("<span>" + ICON.pin + esc(j.location) + "</span>");
+    if (j.vendorName) bits.push("<span>" + ICON.user + esc(j.vendorName) + "</span>");
+
+    var right = "";
+    if (sla) right = '<span class="sla ' + sla.level + '">' + ICON.clock + esc(sla.label) + "</span>";
+    else if (j.status === "COMPLETED") right = '<span class="qn">Needs cost + rating</span>';
+    else if ((j.quotes || []).length) right = '<span class="qn">' + j.quotes.length + " quote" + (j.quotes.length > 1 ? "s" : "") + "</span>";
+
+    return '<button class="job' + (j.urgent && L.isActive(j.status) ? " urgent" : "") +
+      (sla && sla.level === "breach" ? " breach" : "") + '" data-job="' + esc(j.id) + '">' +
+      '<div class="job-top"><span class="job-title">' + esc(L.serviceLabel(j)) + '</span><span class="ref">' + esc(j.ref) + "</span></div>" +
+      (bits.length ? '<div class="job-meta">' + bits.join("") + "</div>" : "") +
+      '<div class="job-foot"><span class="pill ' + meta.tone + '">' + esc(meta.label) + "</span>" +
+      (j.urgent && L.isActive(j.status) ? '<span class="pill danger">Breakdown</span>' : "") +
+      '<span style="flex:1"></span>' + right + "</div></button>";
+  }
+
+  /* ============ RENDER: NEW JOB ============ */
+  function renderNew() {
+    var fleet = L.SERVICES.filter(function (s) { return s.group === "fleet"; });
+    var other = L.SERVICES.filter(function (s) { return s.group === "general"; });
+    function opts(list) {
+      return list.map(function (s) { return '<option value="' + s.code + '">' + esc(s.name) + "</option>"; }).join("");
+    }
+    $("panel").innerHTML =
+      '<div class="shead"><h2>Raise a job</h2><p class="sub">One form, then the job goes out to every matching vendor on WhatsApp.</p></div>' +
+      '<div class="card">' +
+        '<div class="field"><label for="fService">Service</label>' +
+          '<select class="ctl" id="fService">' +
+            '<optgroup label="Fleet &amp; logistics">' + opts(fleet) + "</optgroup>" +
+            '<optgroup label="Other services">' + opts(other) + "</optgroup>" +
+          "</select></div>" +
+        '<div id="fVariants"></div>' +
+        '<div class="row2">' +
+          '<div class="field"><label for="fPlate">Vehicle / plate</label>' +
+            '<input class="ctl" id="fPlate" list="plateList" placeholder="e.g. WA 8823 K" autocomplete="off">' +
+            '<datalist id="plateList">' + state.vehicles.map(function (v) {
+              return '<option value="' + esc(v.plate) + '">' + esc(v.type) + "</option>";
+            }).join("") + "</datalist>" +
+            '<span class="hint">Leave blank for yard or workshop jobs.</span></div>' +
+          '<div class="field"><label for="fLoc">Location</label>' +
+            '<input class="ctl" id="fLoc" placeholder="e.g. KM 312 NKVE southbound" autocomplete="off"></div>' +
+        "</div>" +
+        '<div class="field"><label for="fDesc">What is wrong / what is needed</label>' +
+          '<textarea class="ctl" id="fDesc" placeholder="Describe the fault, load status and anything the vendor must bring."></textarea></div>' +
+        '<label class="toggle" for="fUrgent"><input type="checkbox" id="fUrgent">' +
+          '<span><span class="t">Breakdown — vehicle is down</span><br><span class="s">Starts the response clock and pins it to the top of the board.</span></span></label>' +
+        '<div class="btnrow" style="margin-top:14px"><button class="btn primary block" id="fCreate">Create job and pick vendors</button></div>' +
+      "</div>";
+
+    var sel = $("fService");
+    sel.onchange = function () {
+      var s = L.serviceByCode(sel.value);
+      $("fUrgent").checked = !!(s && s.urgent);
+      renderVariants(s);
+    };
+    renderVariants(L.serviceByCode(sel.value));
+    $("fUrgent").checked = !!(L.serviceByCode(sel.value) || {}).urgent;
+    $("fCreate").onclick = createJob;
+  }
+
+  function renderVariants(s) {
+    var host = $("fVariants");
+    if (!s || !s.variants) { host.innerHTML = ""; return; }
+    host.innerHTML = Object.keys(s.variants).map(function (key) {
+      var label = key === "bodyType" ? "Body type" : key === "length" ? "Length" : key.charAt(0).toUpperCase() + key.slice(1);
+      return '<div class="field"><label for="var_' + key + '">' + esc(label) + "</label>" +
+        '<select class="ctl" data-variant="' + key + '" id="var_' + key + '">' +
+        s.variants[key].map(function (v) { return '<option value="' + esc(v) + '">' + esc(v) + "</option>"; }).join("") +
+        "</select></div>";
+    }).join("");
+  }
+
+  async function createJob() {
+    var code = $("fService").value;
+    var desc = $("fDesc").value.trim();
+    if (!desc) { toast("Describe the job so vendors can quote"); $("fDesc").focus(); return; }
+    var variant = {};
+    Array.prototype.forEach.call(document.querySelectorAll("[data-variant]"), function (el) {
+      variant[el.dataset.variant] = el.value;
+    });
+    var plate = $("fPlate").value.trim();
+    var veh = state.vehicles.find(function (v) { return v.plate.toLowerCase() === plate.toLowerCase(); });
+    var job = {
+      id: L.makeId("job"),
+      ref: L.makeJobRef(new Date()),
+      service: code,
+      variant: Object.keys(variant).length ? variant : null,
+      plate: plate,
+      vehicleType: veh ? veh.type : "",
+      location: $("fLoc").value.trim(),
+      desc: desc,
+      urgent: $("fUrgent").checked,
+      status: "NEW",
+      quotes: [],
+      createdAt: nowISO(),
+      notes: "",
+    };
+    await put("jobs", job);
+    state.tab = "board"; state.filter = "all";
+    render();
+    openJob(job.id);
+    toast("Job " + job.ref + " created");
+  }
+
+  /* ============ RENDER: VENDORS ============ */
+  function renderVendors() {
+    var rows = state.vendors.slice().sort(function (a, b) { return a.name.localeCompare(b.name); }).map(function (v) {
+      var st = L.vendorStats(v.id, state.jobs);
+      var tags = (v.services || []).map(function (c) {
+        var s = L.serviceByCode(c);
+        return '<span class="tag' + (s && s.group === "fleet" ? " fleet" : "") + '">' + esc(s ? s.name : c) + "</span>";
+      }).join("");
+      var wa = L.waLink(v.phone, "");
+      return '<div class="vrow"><div class="vtop"><span class="vname">' + esc(v.name) + "</span>" +
+        (wa ? '<a class="btn sm" href="' + wa + '" target="_blank" rel="noopener">' + ICON.wa + " Chat</a>" : "") +
+        '<button class="iconbtn" data-delven="' + esc(v.id) + '" aria-label="Remove ' + esc(v.name) + '"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M4 7h16M9 7V5h6v2M6 7l1 13h10l1-13"/></svg></button></div>' +
+        '<div class="tagrow">' + tags + "</div>" +
+        (v.areas ? '<div style="font-size:12.5px;color:var(--muted)">' + ICON.pin.replace("<svg", '<svg style="width:12px;height:12px;vertical-align:-2px;margin-right:4px"') + esc(v.areas) + "</div>" : "") +
+        '<div class="vstats"><span><b>' + st.jobsDone + "</b> jobs</span>" +
+        "<span><b>" + esc(L.fmtRM(st.totalSpend)) + "</b> spend</span>" +
+        (st.avgRating ? "<span><b>" + st.avgRating + "★</b> avg</span>" : '<span class="mono">no ratings yet</span>') +
+        '<span class="mono">' + esc(v.phone) + "</span></div></div>";
+    }).join("");
+
+    $("panel").innerHTML =
+      '<div class="shead"><h2>Vendor directory</h2><p class="sub">Your contacts, tagged by what they actually do. Job history and spend build up per vendor as you close jobs.</p></div>' +
+      (state.vendors.length ? '<div class="grid2" style="margin-bottom:16px">' + rows + "</div>"
+        : '<div class="empty" style="margin-bottom:16px"><h3>No vendors yet</h3><p>Paste your contact list below — names, phone numbers and what they do.</p></div>') +
+      '<div class="card"><div class="field"><label for="impText">Add vendors in bulk</label>' +
+        '<span class="hint">One per line: <span class="mono">Name, phone, services, area, notes</span> — services can be English or Malay (tayar, tunda, kimpal…).</span>' +
+        '<textarea class="ctl" id="impText" style="min-height:104px;font-family:var(--mono);font-size:13px" placeholder="Ah Seng Tayar, 012-345 6789, tyre repair | tyre breakdown, Port Klang&#10;Maju Weld, 03-5162 8000, welding + fabrication, Shah Alam"></textarea></div>' +
+        '<div class="btnrow"><button class="btn primary" id="impBtn">Add vendors</button></div>' +
+        '<div id="impOut" style="margin-top:12px"></div></div>';
+
+    $("impBtn").onclick = importVendors;
+    Array.prototype.forEach.call(document.querySelectorAll("[data-delven]"), function (b) {
+      b.onclick = function () {
+        var v = byId(state.vendors, b.dataset.delven);
+        if (v && confirm("Remove " + v.name + " from the directory?")) drop("vendors", v.id);
+      };
+    });
+  }
+
+  async function importVendors() {
+    var res = L.parseVendorImport($("impText").value);
+    if (!res.vendors.length && !res.errors.length) { toast("Nothing to add"); return; }
+    for (var i = 0; i < res.vendors.length; i++) {
+      var v = res.vendors[i];
+      await put("vendors", Object.assign({ id: L.makeId("ven"), createdAt: nowISO() }, v));
+    }
+    var out = "";
+    if (res.vendors.length) out += '<div class="banner" style="background:var(--green-soft);border-color:var(--green);color:var(--text)"><b>Added ' + res.vendors.length + " vendor" + (res.vendors.length > 1 ? "s" : "") + ".</b></div>";
+    if (res.errors.length) {
+      out += '<div class="banner">' + ICON.warn + "<div><b>" + res.errors.length + " line" + (res.errors.length > 1 ? "s" : "") + " skipped.</b><br>" +
+        res.errors.map(function (e) { return "Line " + e.line + ": " + esc(e.reason); }).join("<br>") + "</div></div>";
+    }
+    if ($("impOut")) $("impOut").innerHTML = out;
+    if (res.vendors.length) $("impText").value = "";
+  }
+
+  /* ============ RENDER: FLEET ============ */
+  function renderFleet() {
+    var rows = state.vehicles.slice().sort(function (a, b) {
+      var da = L.dueStatus(a.puspakomDue, nowISO()).days, dbs = L.dueStatus(b.puspakomDue, nowISO()).days;
+      return (da == null ? 9999 : da) - (dbs == null ? 9999 : dbs);
+    }).map(function (v) {
+      var st = L.dueStatus(v.puspakomDue, nowISO());
+      var tone = st.bucket === "overdue" ? "danger" : st.bucket === "soon" ? "warn" : st.bucket === "ok" ? "good" : "neutral";
+      var open = state.jobs.filter(function (j) { return j.plate === v.plate && L.isActive(j.status); }).length;
+      return '<div class="vrow"><div class="vtop"><span class="vname"><span class="plate" style="font-size:13px">' + esc(v.plate) + "</span></span>" +
+        '<span class="pill ' + tone + '">' + esc(st.label) + "</span></div>" +
+        '<div style="font-size:13px;color:var(--muted)">' + esc(v.type || "—") + (v.notes ? " · " + esc(v.notes) : "") + "</div>" +
+        '<div class="vstats"><span>Next Puspakom <b>' + esc(L.fmtDate(v.puspakomDue)) + "</b></span>" +
+        (open ? '<span style="color:var(--steel)"><b>' + open + "</b> open job" + (open > 1 ? "s" : "") + "</span>" : "") + "</div>" +
+        '<div class="btnrow"><button class="btn sm" data-book="' + esc(v.id) + '">Raise Puspakom job</button>' +
+        '<button class="btn sm ghost" data-renew="' + esc(v.id) + '">Mark inspected today</button>' +
+        '<button class="iconbtn" data-delveh="' + esc(v.id) + '" aria-label="Remove ' + esc(v.plate) + '"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M4 7h16M9 7V5h6v2M6 7l1 13h10l1-13"/></svg></button></div></div>';
+    }).join("");
+
+    $("panel").innerHTML =
+      '<div class="shead"><h2>Fleet register</h2><p class="sub">Puspakom runs on a six-month cycle. Anything overdue is a vehicle that legally cannot move.</p></div>' +
+      (state.vehicles.length ? '<div class="grid2" style="margin-bottom:16px">' + rows + "</div>"
+        : '<div class="empty" style="margin-bottom:16px"><h3>No vehicles yet</h3><p>Add your prime movers, trailers and lorries to track inspection dates.</p></div>') +
+      '<div class="card"><div class="row2">' +
+        '<div class="field"><label for="vhPlate">Plate</label><input class="ctl" id="vhPlate" placeholder="WA 8823 K"></div>' +
+        '<div class="field"><label for="vhType">Type</label><input class="ctl" id="vhType" placeholder="Prime mover — Hino 700"></div>' +
+      "</div>" +
+      '<div class="field"><label for="vhDue">Next Puspakom due</label><input class="ctl" id="vhDue" type="date">' +
+        '<span class="hint">Not sure? Put the last inspection date in and we set it six months on.</span></div>' +
+      '<div class="btnrow"><button class="btn primary" id="vhAdd">Add vehicle</button>' +
+      '<button class="btn ghost" id="vhFromLast">Use as last-inspected date</button></div></div>';
+
+    $("vhAdd").onclick = function () { addVehicle(false); };
+    $("vhFromLast").onclick = function () { addVehicle(true); };
+    Array.prototype.forEach.call(document.querySelectorAll("[data-book]"), function (b) {
+      b.onclick = function () { puspakomJob(b.dataset.book); };
+    });
+    Array.prototype.forEach.call(document.querySelectorAll("[data-renew]"), function (b) {
+      b.onclick = function () {
+        var v = byId(state.vehicles, b.dataset.renew);
+        if (!v) return;
+        var today = nowISO().slice(0, 10);
+        put("vehicles", Object.assign({}, v, { puspakomDue: L.nextPuspakomDue(today) }));
+        toast("Next inspection set for " + L.fmtDate(L.nextPuspakomDue(today)));
+      };
+    });
+    Array.prototype.forEach.call(document.querySelectorAll("[data-delveh]"), function (b) {
+      b.onclick = function () {
+        var v = byId(state.vehicles, b.dataset.delveh);
+        if (v && confirm("Remove " + v.plate + " from the fleet?")) drop("vehicles", v.id);
+      };
+    });
+  }
+
+  function addVehicle(fromLast) {
+    var plate = $("vhPlate").value.trim();
+    var date = $("vhDue").value;
+    if (!plate) { toast("Plate number is required"); $("vhPlate").focus(); return; }
+    if (!date) { toast("Pick a date"); $("vhDue").focus(); return; }
+    put("vehicles", {
+      id: L.makeId("veh"),
+      plate: plate,
+      type: $("vhType").value.trim(),
+      puspakomDue: fromLast ? L.nextPuspakomDue(date) : date,
+      notes: "",
+    });
+    $("vhPlate").value = ""; $("vhType").value = ""; $("vhDue").value = "";
+    toast("Vehicle added");
+  }
+
+  async function puspakomJob(vehId) {
+    var v = byId(state.vehicles, vehId);
+    if (!v) return;
+    var st = L.dueStatus(v.puspakomDue, nowISO());
+    var job = {
+      id: L.makeId("job"), ref: L.makeJobRef(new Date()),
+      service: "PUSPAKOM", variant: null,
+      plate: v.plate, vehicleType: v.type,
+      location: "Puspakom branch",
+      desc: "Periodic inspection — " + st.label + ". Vehicle: " + (v.type || v.plate) + ".",
+      urgent: st.bucket === "overdue",
+      status: "NEW", quotes: [], createdAt: nowISO(), notes: "",
+    };
+    await put("jobs", job);
+    state.tab = "board"; render(); openJob(job.id);
+    toast("Puspakom job raised for " + v.plate);
+  }
+
+  /* ============ JOB SHEET ============ */
+  function openJob(id) {
+    state.openJobId = id;
+    state.dispatchPick = {};
+    drawSheet();
+    $("backdrop").classList.add("on");
+    $("sheet").classList.add("on");
+    document.body.style.overflow = "hidden";
+  }
+  function closeSheet() {
+    state.openJobId = null;
+    $("backdrop").classList.remove("on");
+    $("sheet").classList.remove("on");
+    document.body.style.overflow = "";
+  }
+
+  function drawSheet() {
+    var j = byId(state.jobs, state.openJobId);
+    if (!j) { closeSheet(); return; }
+    var meta = L.STATUS_META[j.status] || { label: j.status, tone: "neutral" };
+    var sla = L.slaState(j, Date.now());
+    var matched = L.matchVendors(state.vendors, j.service);
+    var ranked = L.rankQuotes(j.quotes || []);
+
+    $("sheetTitle").innerHTML = esc(L.serviceLabel(j)) + ' <span class="ref">' + esc(j.ref) + "</span>";
+
+    var h = [];
+
+    /* --- status row --- */
+    h.push('<div class="btnrow" style="align-items:center">' +
+      '<span class="pill ' + meta.tone + '">' + esc(meta.label) + "</span>" +
+      (j.urgent && L.isActive(j.status) ? '<span class="pill danger">Breakdown</span>' : "") +
+      (sla ? '<span class="sla ' + sla.level + '">' + ICON.clock + esc(sla.label) + "</span>" : "") +
+      "</div>");
+
+    /* --- facts --- */
+    h.push('<dl class="kv">' +
+      (j.plate ? "<dt>Vehicle</dt><dd><span class=\"plate\">" + esc(j.plate) + "</span> " + esc(j.vehicleType || "") + "</dd>" : "") +
+      (j.location ? "<dt>Where</dt><dd>" + esc(j.location) + "</dd>" : "") +
+      "<dt>Job</dt><dd>" + esc(j.desc || "—") + "</dd>" +
+      "<dt>Raised</dt><dd>" + esc(L.fmtDateTime(j.createdAt)) + "</dd>" +
+      (j.vendorName ? "<dt>Vendor</dt><dd>" + esc(j.vendorName) + "</dd>" : "") +
+      (typeof j.finalCost === "number" ? "<dt>Final cost</dt><dd><b>" + esc(L.fmtRM(j.finalCost)) + "</b>" + (j.rating ? " · " + j.rating + "★" : "") + "</dd>" : "") +
+      "</dl>");
+
+    /* --- dispatch --- */
+    if (L.isActive(j.status) && j.status !== "BOOKED" && j.status !== "IN_PROGRESS") {
+      h.push('<div class="divider"></div><div class="block"><h4>Send to vendors</h4>');
+      if (!matched.length) {
+        h.push('<p style="font-size:13px;color:var(--muted)">No vendor in your directory covers ' +
+          esc((L.serviceByCode(j.service) || {}).name || j.service) + " yet. Add one on the Vendors tab.</p>");
+      } else {
+        h.push(matched.map(function (v) {
+          return '<label class="vpick"><input type="checkbox" data-pick="' + esc(v.id) + '"' +
+            (state.dispatchPick[v.id] ? " checked" : "") + '><span class="vn">' + esc(v.name) +
+            '<br><span class="vp">' + esc(v.areas || v.phone) + "</span></span></label>";
+        }).join(""));
+        h.push('<div class="btnrow"><button class="btn primary" id="dispBtn">' + ICON.wa + " Send job on WhatsApp</button>" +
+          '<button class="btn" id="copyDisp">Copy message</button></div>');
+      }
+      h.push("</div>");
+    }
+
+    /* --- quotes --- */
+    h.push('<div class="divider"></div><div class="block"><h4>Quotes ' + (ranked.length ? "(" + ranked.length + ")" : "") + "</h4>");
+    if (ranked.length) {
+      h.push(ranked.map(function (q, i) {
+        var tags = [];
+        if (q.lowest) tags.push('<span class="pill good">Lowest</span>');
+        if (q.fastest) tags.push('<span class="pill active">Fastest</span>');
+        return '<div class="qrow' + (i === 0 ? " best" : "") + '"><div class="qi"><div class="qv">' + esc(q.vendorName) + "</div>" +
+          '<div class="qm">' + (q.etaMinutes != null ? "ETA " + esc(L.fmtMins(q.etaMinutes)) : "No ETA") +
+          (q.note ? " · " + esc(q.note) : "") + "</div></div>" +
+          '<div style="display:grid;gap:4px;justify-items:end"><span class="qa">' + esc(L.fmtRM(q.amount)) + "</span>" +
+          '<span class="btnrow" style="gap:4px">' + tags.join("") + "</span></div>" +
+          (L.canTransition(j.status, "BOOKED") ? '<button class="btn sm primary" data-book-q="' + esc(q.id) + '">Book</button>' : "") +
+          "</div>";
+      }).join(""));
+      if (ranked.length > 1) {
+        var spread = ranked[ranked.length - 1].amount - ranked[0].amount;
+        if (spread > 0) {
+          h.push('<p style="font-size:12.5px;color:var(--muted)">Cheapest is <b style="color:var(--green)">' +
+            esc(L.fmtRM(spread)) + "</b> below the highest quote — " +
+            Math.round((spread / ranked[ranked.length - 1].amount) * 100) + "% saved by comparing.</p>");
+        }
+        h.push('<button class="btn sm ghost" id="copyCmp">Copy comparison for the boss</button>');
+      }
+    } else {
+      h.push('<p style="font-size:13px;color:var(--muted)">No quotes logged yet.</p>');
+    }
+    if (!L.isTerminal(j.status)) {
+      h.push('<div class="card" style="box-shadow:none;padding:12px;background:var(--surface-2)">' +
+        '<div class="field" style="margin-bottom:9px"><label for="qVendor">Log a quote that came back</label>' +
+        '<select class="ctl" id="qVendor">' +
+        (matched.length ? matched : state.vendors).map(function (v) {
+          return '<option value="' + esc(v.id) + '">' + esc(v.name) + "</option>";
+        }).join("") + "</select></div>" +
+        '<div class="row2"><div class="field" style="margin-bottom:9px"><label for="qAmt">Price (RM)</label>' +
+        '<input class="ctl mono" id="qAmt" type="number" inputmode="decimal" min="0" step="10" placeholder="620"></div>' +
+        '<div class="field" style="margin-bottom:9px"><label for="qEta">ETA (minutes)</label>' +
+        '<input class="ctl mono" id="qEta" type="number" inputmode="numeric" min="0" step="5" placeholder="45"></div></div>' +
+        '<div class="field" style="margin-bottom:9px"><label for="qNote">Note</label>' +
+        '<input class="ctl" id="qNote" placeholder="e.g. new 11R22.5, cert included"></div>' +
+        '<button class="btn sm primary" id="qAdd">Add quote</button></div>');
+    }
+    h.push("</div>");
+
+    /* --- close-out --- */
+    if (j.status === "COMPLETED") {
+      var suggest = "";
+      if (j.vendorId) {
+        var bq = (j.quotes || []).find(function (q) { return q.vendorId === j.vendorId; });
+        if (bq) suggest = bq.amount;
+      }
+      h.push('<div class="divider"></div><div class="block"><h4>Close out</h4>' +
+        '<p style="font-size:12.5px;color:var(--muted)">Recording the real cost is what builds your price history — the number you quote against next time.</p>' +
+        '<div class="row2"><div class="field" style="margin-bottom:9px"><label for="cCost">Final cost (RM)</label>' +
+        '<input class="ctl mono" id="cCost" type="number" inputmode="decimal" min="0" step="10" value="' + esc(suggest) + '"></div>' +
+        '<div class="field" style="margin-bottom:9px"><label for="cRate">Rating</label>' +
+        '<select class="ctl" id="cRate"><option value="5">5 — excellent</option><option value="4">4 — good</option>' +
+        '<option value="3">3 — okay</option><option value="2">2 — poor</option><option value="1">1 — never again</option></select></div></div>' +
+        '<button class="btn primary block" id="closeBtn">Save cost and close job</button></div>');
+    }
+
+    /* --- status moves --- */
+    var moves = L.nextStatuses(j.status).filter(function (s) { return s !== "CLOSED" || j.status !== "COMPLETED"; });
+    if (moves.length) {
+      h.push('<div class="divider"></div><div class="block"><h4>Move this job</h4><div class="btnrow">' +
+        moves.map(function (s) {
+          var m = L.STATUS_META[s];
+          return '<button class="btn sm' + (s === "CANCELLED" ? "" : " primary") + '" data-move="' + s + '">' + esc(m.label) + "</button>";
+        }).join("") + "</div></div>");
+    }
+
+    $("sheetBody").innerHTML = h.join("");
+
+    /* --- wiring --- */
+    Array.prototype.forEach.call(document.querySelectorAll("[data-pick]"), function (c) {
+      c.onchange = function () { state.dispatchPick[c.dataset.pick] = c.checked; };
+    });
+    if ($("dispBtn")) $("dispBtn").onclick = function () { doDispatch(j, false); };
+    if ($("copyDisp")) $("copyDisp").onclick = function () { copy(L.buildDispatchMessage(j), "Dispatch message copied"); };
+    if ($("copyCmp")) $("copyCmp").onclick = function () { copy(L.buildCompareMessage(j, ranked), "Comparison copied"); };
+    if ($("qAdd")) $("qAdd").onclick = function () { addQuote(j); };
+    if ($("closeBtn")) $("closeBtn").onclick = function () { closeOut(j); };
+    Array.prototype.forEach.call(document.querySelectorAll("[data-move]"), function (b) {
+      b.onclick = function () { move(j, b.dataset.move); };
+    });
+    Array.prototype.forEach.call(document.querySelectorAll("[data-book-q]"), function (b) {
+      b.onclick = function () { bookQuote(j, b.dataset.bookQ); };
+    });
+  }
+
+  function copy(text, msg) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function () { toast(msg); }, function () { toast("Couldn't copy — select the text manually"); });
+    } else toast("Copying isn't available here");
+  }
+
+  async function doDispatch(j) {
+    var picked = state.vendors.filter(function (v) { return state.dispatchPick[v.id]; });
+    if (!picked.length) { toast("Tick at least one vendor"); return; }
+    var msg = L.buildDispatchMessage(j);
+    picked.forEach(function (v, i) {
+      var url = L.waLink(v.phone, msg);
+      if (url) setTimeout(function () { window.open(url, "_blank", "noopener"); }, i * 400);
+    });
+    var upd = Object.assign({}, j, {
+      status: L.canTransition(j.status, "DISPATCHED") ? "DISPATCHED" : j.status,
+      dispatchedAt: j.dispatchedAt || nowISO(),
+      dispatchedTo: picked.map(function (v) { return v.id; }),
+    });
+    await put("jobs", upd);
+    drawSheet();
+    toast("Sent to " + picked.length + " vendor" + (picked.length > 1 ? "s" : ""));
+  }
+
+  async function addQuote(j) {
+    var vid = $("qVendor") ? $("qVendor").value : null;
+    var amt = parseFloat($("qAmt").value);
+    if (!vid) { toast("Add a vendor first"); return; }
+    if (!(amt > 0)) { toast("Enter the price they quoted"); $("qAmt").focus(); return; }
+    var v = byId(state.vendors, vid);
+    var eta = parseInt($("qEta").value, 10);
+    var q = {
+      id: L.makeId("q"), vendorId: vid, vendorName: v ? v.name : "Vendor",
+      amount: amt, etaMinutes: isNaN(eta) ? null : eta, note: $("qNote").value.trim(),
+    };
+    var quotes = (j.quotes || []).concat([q]);
+    var upd = Object.assign({}, j, {
+      quotes: quotes,
+      status: L.canTransition(j.status, "QUOTED") ? "QUOTED" : j.status,
+      dispatchedAt: j.dispatchedAt || nowISO(),
+    });
+    await put("jobs", upd);
+    drawSheet();
+    toast("Quote logged");
+  }
+
+  async function bookQuote(j, qid) {
+    var q = (j.quotes || []).find(function (x) { return x.id === qid; });
+    if (!q) return;
+    var upd = Object.assign({}, j, {
+      status: "BOOKED", bookedAt: nowISO(),
+      vendorId: q.vendorId, vendorName: q.vendorName,
+    });
+    await put("jobs", upd);
+    drawSheet();
+    toast("Booked " + q.vendorName + " at " + L.fmtRM(q.amount));
+  }
+
+  async function move(j, to) {
+    if (!L.canTransition(j.status, to)) { toast("That move isn't allowed from " + (L.STATUS_META[j.status] || {}).label); return; }
+    var patch = { status: to };
+    if (to === "DISPATCHED") patch.dispatchedAt = j.dispatchedAt || nowISO();
+    if (to === "BOOKED") patch.bookedAt = j.bookedAt || nowISO();
+    if (to === "COMPLETED") patch.completedAt = nowISO();
+    await put("jobs", Object.assign({}, j, patch));
+    if (to === "CLOSED" || to === "CANCELLED") { closeSheet(); render(); }
+    else drawSheet();
+    toast("Moved to " + (L.STATUS_META[to] || {}).label);
+  }
+
+  async function closeOut(j) {
+    var cost = parseFloat($("cCost").value);
+    if (!(cost >= 0)) { toast("Enter what it actually cost"); $("cCost").focus(); return; }
+    await put("jobs", Object.assign({}, j, {
+      finalCost: cost, rating: parseInt($("cRate").value, 10), status: "CLOSED",
+    }));
+    closeSheet(); render();
+    toast("Closed at " + L.fmtRM(cost));
+  }
+
+  /* ============ CSV EXPORT ============ */
+  async function exportCSV() {
+    var csv = L.jobsToCSV(state.jobs.slice().sort(function (a, b) {
+      return String(a.createdAt).localeCompare(String(b.createdAt));
+    }));
+    var name = "fixlah-jobs-" + nowISO().slice(0, 10) + ".csv";
+    var dl = null;
+    try { dl = window.claude && window.claude.use ? await window.claude.use("downloads") : null; } catch (e) { dl = null; }
+    if (dl) {
+      try { await dl.save({ filename: name, data: csv }); toast("Saved " + name); return; }
+      catch (e) { /* viewer declined or unavailable — fall through to clipboard */ }
+    }
+    copy(csv, "CSV copied — paste straight into Excel or Sheets");
+  }
+
+  /* ============ MASTER RENDER ============ */
+  function render() {
+    renderTiles();
+    Array.prototype.forEach.call(document.querySelectorAll(".tab"), function (t) {
+      t.setAttribute("aria-selected", String(t.dataset.tab === state.tab));
+    });
+    if (state.tab === "board") renderBoard();
+    else if (state.tab === "new") renderNew();
+    else if (state.tab === "vendors") renderVendors();
+    else if (state.tab === "fleet") renderFleet();
+    if (state.openJobId) drawSheet();
+  }
+
+  /* ============ EVENTS ============ */
+  Array.prototype.forEach.call(document.querySelectorAll(".tab"), function (t) {
+    t.onclick = function () { state.tab = t.dataset.tab; render(); window.scrollTo({ top: 0, behavior: "smooth" }); };
+  });
+  $("sheetClose").onclick = closeSheet;
+  $("backdrop").onclick = closeSheet;
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape" && state.openJobId) closeSheet(); });
+
+  $("themeBtn").onclick = function () {
+    var cur = document.documentElement.getAttribute("data-theme");
+    var next = cur === "dark" ? "light" : cur === "light" ? "dark"
+      : (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "light" : "dark");
+    document.documentElement.setAttribute("data-theme", next);
+  };
+
+  /* keep SLA clocks honest without fighting the user */
+  setInterval(function () { if (!state.openJobId && state.tab === "board") render(); }, 30000);
+
+  boot();
+})();
+</script>
+</body>
+</html>
